@@ -37,7 +37,7 @@ int main()
         || !initializeGLAD())
         return EXIT_FAILURE;
 
-    glViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     while (!glfwWindowShouldClose(window))
     {
