@@ -27,6 +27,12 @@
     <ClInclude Include="vertexShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fragmentShader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">

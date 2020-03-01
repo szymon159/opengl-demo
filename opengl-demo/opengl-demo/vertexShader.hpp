@@ -10,9 +10,11 @@ const char* basicVertexShaderSource = "\
         gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n\
     }\0";
 
-int compileBasicVertexShader()
+uint compileBasicVertexShader()
 {
     uint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    if (!vertexShader)
+        return FAILURE;
     glShaderSource(vertexShader, 1, &basicVertexShaderSource, NULL);
     glCompileShader(vertexShader);
 
@@ -25,7 +27,8 @@ int compileBasicVertexShader()
         glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
         printf("%s\n", infoLog);
+        return FAILURE;
     }
 
-    return success;
+    return vertexShader;
 }
