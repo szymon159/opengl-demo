@@ -1,5 +1,8 @@
 #pragma once
 
+// Types
+typedef unsigned int uint;
+
 // Constants
 #include "consts.hpp"
 

@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="consts.hpp" />
     <ClInclude Include="includes.hpp" />
+    <ClInclude Include="vertexShader.hpp" />
     <ClInclude Include="window.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "includes.hpp"
 
 #include "window.hpp"
+#include "vertexShader.hpp"
 
 using namespace Window;
 
@@ -38,6 +39,7 @@ int main()
         return EXIT_FAILURE;
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    compileBasicVertexShader();
 
     while (!glfwWindowShouldClose(window))
     {
