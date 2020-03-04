@@ -90,6 +90,9 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        // Process input
+        processInput(window);
+
         // Clear the scene
         glClear(GL_COLOR_BUFFER_BIT);
 
