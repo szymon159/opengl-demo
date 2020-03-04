@@ -30,22 +30,34 @@ int initializeGLAD()
 //
 
 // TODO: Move this method somewhere else (but probably will be deleted in the meantime)
-uint initializeTriangle()
+uint initializeRectangle()
 {
     float vertices[] =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+         0.5f,  0.5f, 0.0f,  // top right
+         0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f,  0.5f, 0.0f   // top left 
     };
+
+    // Indices of vertices creating triangles creating rectangle
+    uint indices[] =
+    {
+        0, 1, 3,   // first triangle
+        1, 2, 3    // second triangle
+    };
+
     // Copy and bind vertices to opengl buffer
-    uint VBO, VAO;
+    uint VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Set vertex attributes
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -74,7 +86,7 @@ int main()
         return EXIT_FAILURE;
 
     // Get VAO corresponding to default triangle
-    uint VAO = initializeTriangle();
+    uint VAO = initializeRectangle();
 
     while (!glfwWindowShouldClose(window))
     {
@@ -84,7 +96,7 @@ int main()
         // Draw object referenced by VAO
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // Double buffering
         glfwSwapBuffers(window);
