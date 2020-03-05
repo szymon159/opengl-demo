@@ -8,7 +8,7 @@
 uint applyShaders()
 {
     uint vertexShader = compileBasicVertexShader();
-    uint fragmentShader = compileOrangeFragmentShader();
+    uint fragmentShader = compileBasicFragmentShader();
     if (!vertexShader
         || !fragmentShader)
         return FAILURE;

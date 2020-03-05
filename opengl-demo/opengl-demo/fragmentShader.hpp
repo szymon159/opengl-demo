@@ -2,20 +2,21 @@
 
 #include "includes.hpp"
 
-const char* orangeFragmentShaderSource = "\
+const char* basicFragmentShaderSource = "\
     #version 330 core\n\
     out vec4 fragmentColor;\n\
+    in vec4 vertexColor;\n\
     void main()\n\
     {\n\
-        fragmentColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n\
+        fragmentColor = vertexColor;\n\
     }\0";
 
-uint compileOrangeFragmentShader()
+uint compileBasicFragmentShader()
 {
     uint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     if (!fragmentShader)
         return FAILURE;
-    glShaderSource(fragmentShader, 1, &orangeFragmentShaderSource, NULL);
+    glShaderSource(fragmentShader, 1, &basicFragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
 
     // Check fragment compilation result
