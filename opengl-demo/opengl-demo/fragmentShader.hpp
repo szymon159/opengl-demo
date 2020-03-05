@@ -6,9 +6,10 @@ const char* basicFragmentShaderSource = "\
     #version 330 core\n\
     out vec4 fragmentColor;\n\
     in vec4 vertexColor;\n\
+    uniform float intensityFactor;\n\
     void main()\n\
     {\n\
-        fragmentColor = vertexColor;\n\
+        fragmentColor = intensityFactor * vertexColor;\n\
     }\0";
 
 uint compileBasicFragmentShader()

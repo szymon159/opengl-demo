@@ -94,10 +94,22 @@ int main()
         processInput(window);
 
         // Clear the scene
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw object referenced by VAO
+        // Configure shaders
+        float timeValue = glfwGetTime();
+        float intensityFactor = (sin(timeValue) / 2.0f) + 0.5f;
+        int intensityFactorLocation = glGetUniformLocation(shaderProgram, "intensityFactor");
+        if (intensityFactorLocation == -1)
+        {
+            printf("Unable to find uniform: intensityFactor\n");
+            return EXIT_FAILURE;
+        }
         glUseProgram(shaderProgram);
+        glUniform1f(intensityFactorLocation, intensityFactor);
+        
+        // Draw object referenced by VAO
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
