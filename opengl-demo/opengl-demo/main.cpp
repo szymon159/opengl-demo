@@ -30,15 +30,62 @@ int initializeGLAD()
 //
 
 // TODO: Move this method somewhere else (but probably will be deleted in the meantime)
-uint initializeRectangle()
+uint initializeModel()
 {
-    float vertices[] =
+    // Rectangle
+    //float vertices[] =
+    //{
+    //    // positions        // texture
+    //     1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
+    //     1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+    //    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
+    //    -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left 
+    //};
+
+    // Cuboid
+    float vertices[] = 
     {
-        // positions        // texture
-         1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
-         1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
-        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left 
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
     // Indices of vertices creating triangles creating rectangle
@@ -105,7 +152,10 @@ uint loadTexture(std::string texturePath)
 glm::mat4 createTransformationMatrix()
 {
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // Rectangle
+    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // Cuboid
+    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
     glm::mat4 view = glm::mat4(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -125,6 +175,7 @@ int main()
         || !initializeGLAD())
         return EXIT_FAILURE;
 
+    glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     
     // TODO: Link shaders in compile-time or make it work when started from .exe
@@ -133,7 +184,7 @@ int main()
         return EXIT_FAILURE;
 
     // Get VAO corresponding to default triangle
-    uint VAO = initializeRectangle();
+    uint VAO = initializeModel();
 
     // Load textures
     // TODO: Change this hardcoded "2"
@@ -153,7 +204,7 @@ int main()
 
         // Clear the scene
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Run shaders
         shader.use();
@@ -175,7 +226,10 @@ int main()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture[1]);
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        // Rectangle
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        // Cuboid
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // Double buffering
         glfwSwapBuffers(window);
