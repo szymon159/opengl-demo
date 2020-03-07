@@ -34,11 +34,11 @@ uint initializeRectangle()
 {
     float vertices[] =
     {
-        // positions            // color            // texture
-         0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-         0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,     0.0f, 1.0f, 0.0f,   0.0f, 0.0f,   // bottom left
-        -0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f    // top left 
+        // positions        // texture
+         1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
+         1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
+        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left 
     };
 
     // Indices of vertices creating triangles creating rectangle
@@ -61,12 +61,10 @@ uint initializeRectangle()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Set vertex attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -101,6 +99,21 @@ uint loadTexture(std::string texturePath)
     stbi_image_free(data);
 
     return texture;
+}
+
+// TODO: Move it somewhere
+glm::mat4 createTransformationMatrix()
+{
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), (float)(WINDOW_WIDTH / WINDOW_HEIGHT), 0.1f, 100.0f);
+
+    return projection * view * model;
 }
 
 int main()
@@ -146,13 +159,9 @@ int main()
         shader.use();
 
         // Compute transformations
-        float timeValue = (float)glfwGetTime();
-        float intensityFactor = (sin(timeValue) / 2.0f) + 0.5f;
-        glm::mat4 transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-        transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
-        transform = glm::rotate(transform, timeValue, glm::vec3(0.0, 0.0, 1.0));
-        
+        float intensityFactor = (sin(glfwGetTime()) / 2.0f) + 0.5f;
+        glm::mat4 transform = createTransformationMatrix();
+
         // Asssign uniforms for shaders
         if (!shader.setFloat("intensityFactor", intensityFactor) ||
             !shader.setInt("texture1", 0) ||
