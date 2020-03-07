@@ -9,6 +9,7 @@ typedef unsigned int uint;
 // OPENGL headers
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stb_image.h>
 
 // Common headers
 #include <cstdlib>
