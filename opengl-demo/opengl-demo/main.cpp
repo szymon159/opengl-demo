@@ -83,8 +83,9 @@ int main()
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     
-    uint shaderProgram;
-    if (!(shaderProgram = applyShaders()))
+    // TODO: Link shaders in compile-time or make it work when started from .exe
+    Shader shader("basicVertexShader.vert", "basicFragmentShader.frag");
+    if (!shader.IsDefined)
         return EXIT_FAILURE;
 
     // Get VAO corresponding to default triangle
@@ -102,14 +103,9 @@ int main()
         // Configure shaders
         float timeValue = glfwGetTime();
         float intensityFactor = (sin(timeValue) / 2.0f) + 0.5f;
-        int intensityFactorLocation = glGetUniformLocation(shaderProgram, "intensityFactor");
-        if (intensityFactorLocation == -1)
-        {
-            printf("Unable to find uniform: intensityFactor\n");
+        shader.use();
+        if (!shader.setFloat("intensityFactor", intensityFactor))
             return EXIT_FAILURE;
-        }
-        glUseProgram(shaderProgram);
-        glUniform1f(intensityFactorLocation, intensityFactor);
         
         // Draw object referenced by VAO
         glBindVertexArray(VAO);

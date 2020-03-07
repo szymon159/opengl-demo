@@ -153,15 +153,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="consts.hpp" />
-    <ClInclude Include="fragmentShader.hpp" />
     <ClInclude Include="includes.hpp" />
     <ClInclude Include="shader.hpp" />
-    <ClInclude Include="vertexShader.hpp" />
     <ClInclude Include="window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="basicFragmentShader.frag" />
+    <None Include="basicVertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,3 +13,6 @@ typedef unsigned int uint;
 // Common headers
 #include <cstdlib>
 #include <cstdio>
+#include <string>
+#include <fstream>
+#include <sstream>

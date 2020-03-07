@@ -2,41 +2,45 @@
 
 #include "includes.hpp"
 
-#include "vertexShader.hpp"
-#include "fragmentShader.hpp"
+#ifndef SHADER_H
+#define SHADER_H
 
-uint applyShaders()
+class Shader
 {
-    uint vertexShader = compileBasicVertexShader();
-    uint fragmentShader = compileBasicFragmentShader();
-    if (!vertexShader
-        || !fragmentShader)
-        return FAILURE;
+public:
+    // Shader program ID
+    uint ID;
+    // Indicates if shader is correctly compiled and linked
+    bool IsDefined = false;
 
-    uint shaderProgram = glCreateProgram();
-    if (!shaderProgram)
-        return FAILURE;
+    // Constructor reads and builds the shader (using private methods)
+    Shader(const char* vertexPath, const char* fragmentPath);
 
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    // Use/activate the shader
+    void use();
+    // Utility uniform functions
+    bool setBool(const std::string& name, bool value) const;
+    bool setInt(const std::string& name, int value) const;
+    bool setFloat(const std::string& name, float value) const;
 
-    // Check linking result
-    int success;
-    char infoLog[512];
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        // TODO: Format line below to correspond type of error
-        printf("ERROR::PROGRAM::SHADER::LINKING_FAILED\n");
-        printf("%s\n", infoLog);
-        return FAILURE;
-    }
+private:
+    // Code of vertex and fragment shaders
+    std::string vShaderCode;
+    std::string fShaderCode;
+    // IDs of vertex and fragment shaders
+    uint vertexShader;
+    uint fragmentShader;
 
-    glUseProgram(shaderProgram);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    // Reads vertex and fragment shaders code from files into vShaderCode and fShaderCode
+    bool readShaders(const char* vertexPath, const char* fragmentPath);
+    // Compiles vertex and fragment shaders from vShaderCode and fShaderCode to vertexShader and fragmentShader
+    bool compileShaders();
+    // Creates shader program from vertexShader and fragmentShader and sets its id to ID
+    bool linkShaderProgram();
+    // Gets uniform location and returns -1 if unable to find
+    int getUnifromLocation(const std::string& name) const;
+    // Checks shader compilation/linking errors
+    bool checkCompileErrors(uint shader, std::string type);
+};
 
-    return shaderProgram;
-}
+#endif
