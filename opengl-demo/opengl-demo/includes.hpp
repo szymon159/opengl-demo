@@ -2,6 +2,7 @@
 
 // Types
 typedef unsigned int uint;
+typedef unsigned char uchar;
 
 // Constants
 #include "consts.hpp"

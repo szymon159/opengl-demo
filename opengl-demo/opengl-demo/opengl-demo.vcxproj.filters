@@ -38,12 +38,15 @@
     <ClCompile Include="shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="basicVertexShader.vert">
+    <None Include="fragmentShader.frag">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="basicFragmentShader.frag">
+    <None Include="vertexShader.vert">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
