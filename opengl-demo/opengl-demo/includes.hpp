@@ -12,6 +12,11 @@ typedef unsigned char uchar;
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
+// GLM headers
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 // Common headers
 #include <cstdlib>
 #include <cstdio>

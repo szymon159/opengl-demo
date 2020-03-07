@@ -143,13 +143,21 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Run shaders
-        float timeValue = glfwGetTime();
-        float intensityFactor = (sin(timeValue) / 2.0f) + 0.5f;
         shader.use();
-        // Asssign uniforms for shader
+
+        // Compute transformations
+        float timeValue = (float)glfwGetTime();
+        float intensityFactor = (sin(timeValue) / 2.0f) + 0.5f;
+        glm::mat4 transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+        transform = glm::rotate(transform, timeValue, glm::vec3(0.0, 0.0, 1.0));
+        
+        // Asssign uniforms for shaders
         if (!shader.setFloat("intensityFactor", intensityFactor) ||
             !shader.setInt("texture1", 0) ||
-            !shader.setInt("texture2", 1))
+            !shader.setInt("texture2", 1) ||
+            !shader.setMatrix4("transform", transform))
             return EXIT_FAILURE;
         
         // Draw object referenced by VAO

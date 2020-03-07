@@ -22,6 +22,7 @@ public:
     bool setBool(const std::string& name, bool value) const;
     bool setInt(const std::string& name, int value) const;
     bool setFloat(const std::string& name, float value) const;
+    bool setMatrix4(const std::string& name, glm::mat4 value) const;
 
 private:
     // Code of vertex and fragment shaders

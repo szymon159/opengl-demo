@@ -26,6 +26,7 @@ bool Shader::setBool(const std::string& name, bool value) const
     glUniform1i(uniformLocation, (int)value);
     return SUCCESS;
 }
+
 bool Shader::setInt(const std::string& name, int value) const
 {
     int uniformLocation = getUnifromLocation(name);
@@ -35,6 +36,7 @@ bool Shader::setInt(const std::string& name, int value) const
     glUniform1i(uniformLocation, value);
     return SUCCESS;
 }
+
 bool Shader::setFloat(const std::string& name, float value) const
 {
     int uniformLocation = getUnifromLocation(name);
@@ -42,6 +44,16 @@ bool Shader::setFloat(const std::string& name, float value) const
         return FAILURE;
 
     glUniform1f(uniformLocation, value);
+    return SUCCESS;
+}
+
+bool Shader::setMatrix4(const std::string& name, glm::mat4 value) const
+{
+    int uniformLocation = getUnifromLocation(name);
+    if (uniformLocation == -1)
+        return FAILURE;
+
+    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(value));
     return SUCCESS;
 }
 //
