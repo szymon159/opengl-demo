@@ -23,4 +23,22 @@ namespace Window
 
         return window;
     }
+
+    // Keys:
+    //
+    // Display mode:
+    // 1 - filled polygons
+    // 2 - wireframe of polygons
+    void processInput(GLFWwindow *window)
+    {
+        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        }
+        else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+    }
 }

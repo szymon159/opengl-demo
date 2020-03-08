@@ -153,12 +153,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="consts.hpp" />
+    <ClInclude Include="cuboid.hpp" />
     <ClInclude Include="includes.hpp" />
+    <ClInclude Include="model.hpp" />
+    <ClInclude Include="rectangle.hpp" />
+    <ClInclude Include="scene.hpp" />
+    <ClInclude Include="shader.hpp" />
     <ClInclude Include="window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragmentShader.frag" />
+    <None Include="vertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
