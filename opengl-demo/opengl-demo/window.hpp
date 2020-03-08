@@ -3,7 +3,7 @@
 
 #include "scene.hpp"
 
-namespace Window
+namespace window
 {
     // This variable is needed as main loop operations are not capped to monitor refresh rate
     float MaxFPS = 60.0f;

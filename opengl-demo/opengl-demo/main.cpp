@@ -7,7 +7,7 @@
 #include "square.hpp"
 #include "scene.hpp"
 
-using namespace Window;
+using namespace window;
 
 // TODO: Move to another file when refactoring
 int initializeGLFW()
@@ -89,7 +89,7 @@ int main()
         processInput(window, &scene);
 
         // Lock FPS
-        float time = glfwGetTime();
+        float time = (float)glfwGetTime();
         float deltaTime = time - previousTime;
         if (deltaTime < (1.0f / MaxFPS))
             continue;
@@ -101,7 +101,7 @@ int main()
 
         // Run shaders
         // TODO: Move it or delete
-        shader.use();
+        shader.Use();
         
         // Update models
         scene.Update();

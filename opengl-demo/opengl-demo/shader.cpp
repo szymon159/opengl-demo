@@ -12,12 +12,12 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     IsDefined = true;
 }
 
-void Shader::use()
+void Shader::Use()
 {
     glUseProgram(ID);
 }
 
-bool Shader::setBool(const std::string& name, bool value) const
+bool Shader::SetBool(const std::string& name, bool value) const
 {
     int uniformLocation = getUnifromLocation(name);
     if (uniformLocation == - 1)
@@ -27,7 +27,7 @@ bool Shader::setBool(const std::string& name, bool value) const
     return SUCCESS;
 }
 
-bool Shader::setInt(const std::string& name, int value) const
+bool Shader::SetInt(const std::string& name, int value) const
 {
     int uniformLocation = getUnifromLocation(name);
     if (uniformLocation == -1)
@@ -37,7 +37,7 @@ bool Shader::setInt(const std::string& name, int value) const
     return SUCCESS;
 }
 
-bool Shader::setFloat(const std::string& name, float value) const
+bool Shader::SetFloat(const std::string& name, float value) const
 {
     int uniformLocation = getUnifromLocation(name);
     if (uniformLocation == -1)
@@ -47,7 +47,7 @@ bool Shader::setFloat(const std::string& name, float value) const
     return SUCCESS;
 }
 
-bool Shader::setMatrix4(const std::string& name, glm::mat4 value) const
+bool Shader::SetMatrix4(const std::string& name, glm::mat4 value) const
 {
     int uniformLocation = getUnifromLocation(name);
     if (uniformLocation == -1)
