@@ -55,7 +55,7 @@ int main()
 
     // Create models and add them to a scene
     Scene scene(projection);
-    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.2f), &shader, "wall.jpg");
+    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
     if (!cube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&cube);
@@ -71,11 +71,21 @@ int main()
     trackingCamera.SetTargetModel(&cube);
     scene.AddCamera(&staticCamera);
     scene.AddCamera(&trackingCamera);
-    
+
+    float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))
     {
+        glfwPollEvents();
+
         // Process input
         processInput(window, &scene);
+
+        // Lock FPS
+        float time = glfwGetTime();
+        float deltaTime = time - previousTime;
+        if (deltaTime < (1.0f / MaxFPS))
+            continue;
+        previousTime = time;
 
         // Clear the scene
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -94,7 +104,6 @@ int main()
 
         // Double buffering
         glfwSwapBuffers(window);
-        glfwPollEvents();
     }
 
     glfwTerminate();

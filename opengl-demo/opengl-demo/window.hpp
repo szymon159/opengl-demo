@@ -5,6 +5,9 @@
 
 namespace Window
 {
+    // HACK: This variable is needed as main loop operations are not capped as drawing
+    float MaxFPS = 60.0f;
+
     void framebufferSize_callback(GLFWwindow* window, int width, int height)
     {
         glViewport(0, 0, width, height);
@@ -12,7 +15,11 @@ namespace Window
 
     GLFWwindow* createWindow()
     {
-        GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL);
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+        MaxFPS = (float)mode->refreshRate;
+        GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, monitor, NULL);
         if (window == NULL)
         {
             printf("Failed to create GLFW window\n");
@@ -27,6 +34,8 @@ namespace Window
     }
 
     // Keys:
+    //
+    // ESC - close
     //
     // Cameras:
     // 1 - static
@@ -61,6 +70,11 @@ namespace Window
         else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        // Close
+        else if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        {
+            glfwSetWindowShouldClose(window, true);
         }
     }
 }
