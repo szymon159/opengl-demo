@@ -33,10 +33,10 @@
     <ClInclude Include="model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cuboid.hpp">
+    <ClInclude Include="square.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangle.hpp">
+    <ClInclude Include="cube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,6 +51,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.hpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,37 +3,24 @@
 #include "includes.hpp"
 
 #include "model.hpp"
+#include "camera.hpp"
 
 class Scene
 {
 public:
-	Scene(glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
-		: viewMatrix(viewMatrix), projectionMatrix(projectionMatrix)
-	{
-		models.clear();
-		modelsCount = 0;
-	}
+	Scene(glm::mat4 projectionMatrix);
 
-	void AddModel(Model* model)
-	{
-		models.push_back(model);
-		modelsCount++;
-	}
-
-	bool Draw()
-	{
-		for (int i = 0; i < modelsCount; i++)
-		{
-			if (!models[i]->Draw(viewMatrix, projectionMatrix))
-				return FAILURE;
-		}
-
-		return SUCCESS;
-	}
+	void AddModel(Model* model);
+	void AddCamera(Camera* camera);
+	void ToggleActiveCamera(int newActiveCameraId);
+	void Update();
+	bool Draw();
 
 private:
-	glm::mat4 viewMatrix;
 	glm::mat4 projectionMatrix;
 	std::vector<Model*> models;
+	std::vector<Camera*> cameras;
 	int modelsCount;
+	int camerasCount;
+	int activeCameraId;
 };
