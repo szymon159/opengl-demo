@@ -19,6 +19,11 @@ namespace Window
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
         MaxFPS = (float)mode->refreshRate;
+
+#ifdef _DEBUG
+        monitor = NULL;
+#endif // DEBUG
+
         GLFWwindow* window = glfwCreateWindow(kWindowWidth, kWindowHeight, WINDOW_TITLE, monitor, NULL);
         if (window == NULL)
         {

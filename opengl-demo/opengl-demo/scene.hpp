@@ -37,6 +37,7 @@ public:
 
 	void Update()
 	{
+		// TODO: Do it in some other way
 		models[1]->Update();
 
 		for (int i = 0; i < camerasCount; i++)
