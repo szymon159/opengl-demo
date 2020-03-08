@@ -5,14 +5,8 @@
 class Rectangle : public Model
 {
 public:
-	Rectangle(glm::vec3 position, float angleDegrees, Shader* shader)
-		:Model(rectangleVertices, RECTANGLE_VERTICES, position, angleDegrees, shader)
-	{
-
-	}
-
-	Rectangle(glm::vec3 position, float angleDegrees, Shader* shader, std::string texturePath)
-		:Model(texturedRectangleVertices, RECTANGLE_VERTICES, position, angleDegrees, shader, texturePath)
+	Rectangle(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, Shader* shader, std::string texturePath = "")
+		:Model(texturePath == "" ? rectangleVertices : texturedRectangleVertices, RECTANGLE_VERTICES, position, angleDegrees, rotationAxis, shader, texturePath)
 	{
 
 	}

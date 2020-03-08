@@ -5,14 +5,8 @@
 class Cuboid : public Model
 {
 public:
-	Cuboid(glm::vec3 position, float angleDegrees, Shader* shader)
-		:Model(cuboidVertices, CUBOID_VERTICES, position, angleDegrees, shader)
-	{
-
-	}
-
-    Cuboid(glm::vec3 position, float angleDegrees, Shader* shader, std::string texturePath)
-        :Model(texturedCuboidVertices, CUBOID_VERTICES, position, angleDegrees, shader, texturePath)
+    Cuboid(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, Shader* shader, std::string texturePath = "")
+        :Model(texturePath == "" ? cuboidVertices : texturedCuboidVertices, CUBOID_VERTICES, position, angleDegrees, rotationAxis, shader, texturePath)
     {
 
     }

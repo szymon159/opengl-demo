@@ -4,8 +4,6 @@
 
 #include "shader.hpp"
 
-// Rectangle
-//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 class Model
 {
@@ -19,27 +17,28 @@ public:
     // Rotation angle in degrees
     float AngleDegrees;
 
-    // Binds model with following vertices to VAO and sets its location
-    // Vertices is the array with 3 values for each vetex: coordinates xyz
-    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, Shader *shader)
-        :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), shader(shader)
-    {
-        setVAO(vertices, 1);
-        if (!vaoId)
-            return;
-    }
+    // The axis to rotate around
+    glm::vec3 RotationAxis;
 
-    // Binds model with following vertices to VAO and sets its location and texture attributes
-    // Vertices is the array with 5 values for each vetex: coordinates xyz, textureCoordinates xy
-    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, Shader *shader, std::string texturePath)
-        :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), shader(shader)
+    // Binds model with following vertices to VAO and sets its location and texture attributes (if path not empty)
+    // Vertices is the array with 3 or 5 values for each vetex: coordinates xyz and textureCoordinates xy (if path not empty)
+    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, Shader *shader, std::string texturePath = "")
+        :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), shader(shader)
 	{
-        setVAO(vertices, 2);
+        // Check if model has texture or not
+        int paramCount = texturePath == "" ? 1 : 2;
+
+        setVAO(vertices, paramCount);
         if (!vaoId)
             return;
 
-        loadTexure(texturePath);
-        IsDefined = textureId != 0;
+        if (texturePath != "")
+        {
+            loadTexure(texturePath);
+            IsDefined = textureId != 0;
+        }
+
+        updateModelMatrix();
 	}
 
     // TODO: Do this automatically based on some lambda expression defined at the beginning
@@ -135,6 +134,6 @@ private:
     void updateModelMatrix()
     {
         modelMatrix = glm::translate(glm::mat4(1.0f), Position);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(AngleDegrees), glm::vec3(0.5f, 1.0f, 0.0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(AngleDegrees), RotationAxis);
     }
 };
