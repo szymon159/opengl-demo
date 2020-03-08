@@ -4,7 +4,7 @@
 
 #include "shader.hpp"
 
-
+// TODO: Move methods' implementation to .cpp file
 class Model
 {
 public:

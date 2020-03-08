@@ -50,13 +50,12 @@ int main()
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 
-    // View and projection matrices
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    // Projection matrix 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)(WINDOW_WIDTH / WINDOW_HEIGHT), 0.1f, 100.0f);
 
     // Create models and add them to a scene
-    Scene scene(view, projection);
-    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.5f), &shader, "wall.jpg");
+    Scene scene(projection);
+    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.5f), &shader, "wall.jpg");
     if (!cube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&cube);
@@ -65,6 +64,10 @@ int main()
     if (!rect.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&rect);
+
+    // Create cameras
+    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f));
+    scene.AddCamera(&camera);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -76,10 +79,11 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Run shaders
+        // TODO: Move it or delete
         shader.use();
         
         // Update models
-        //cube.Update(glm::vec3(), (float)glfwGetTime() * 50.0f);
+        scene.Update();
 
         // Draw scene
         if (!scene.Draw())
