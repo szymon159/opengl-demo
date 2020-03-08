@@ -4,6 +4,7 @@
 #include "shader.hpp"
 #include "model.hpp"
 #include "cuboid.hpp"
+#include "rectangle.hpp"
 
 using namespace Window;
 

@@ -156,6 +156,7 @@
     <ClInclude Include="cuboid.hpp" />
     <ClInclude Include="includes.hpp" />
     <ClInclude Include="model.hpp" />
+    <ClInclude Include="rectangle.hpp" />
     <ClInclude Include="scene.hpp" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="window.hpp" />

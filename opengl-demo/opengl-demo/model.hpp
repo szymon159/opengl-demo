@@ -5,17 +5,7 @@
 #include "shader.hpp"
 
 // Rectangle
-//float vertices[] =
-//{
-//    // positions        // texture
-//     1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
-//     1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-//    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
-//    -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left 
-//};
-
-    // Rectangle
-    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 class Model
 {
