@@ -5,14 +5,14 @@
 class Cuboid : public Model
 {
 public:
-	Cuboid(glm::mat4 modelMatrix)
-		:Model(cuboidVertices, 36, modelMatrix)
+	Cuboid(glm::vec3 position, float angleDegrees, Shader* shader)
+		:Model(cuboidVertices, 36, position, angleDegrees, shader)
 	{
 
 	}
 
-    Cuboid(std::string texturePath, glm::mat4 modelMatrix)
-        :Model(texturedCuboidVertices, 36, texturePath, modelMatrix)
+    Cuboid(glm::vec3 position, float angleDegrees, Shader* shader, std::string texturePath)
+        :Model(texturedCuboidVertices, 36, position, angleDegrees, shader, texturePath)
     {
 
     }

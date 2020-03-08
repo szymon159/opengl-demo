@@ -31,24 +31,6 @@ int initializeGLAD()
 }
 //
 
-// TODO: Move it somewhere
-glm::mat4 createTransformationMatrix()
-{
-    glm::mat4 model = glm::mat4(1.0f);
-    // Rectangle
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    // Cuboid
-    //model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
-    glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)(WINDOW_WIDTH / WINDOW_HEIGHT), 0.1f, 100.0f);
-
-    return projection * view * model;
-}
-
 int main()
 {
     GLFWwindow* window;
@@ -66,9 +48,13 @@ int main()
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 
-    Cuboid cube("wall.jpg", glm::mat4(1.0f));
+    Cuboid cube(glm::vec3(), 0, &shader, "wall.jpg");
     if (!cube.IsDefined)
         return EXIT_FAILURE;
+
+    // View and projection matrices
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)(WINDOW_WIDTH / WINDOW_HEIGHT), 0.1f, 100.0f);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -81,17 +67,13 @@ int main()
 
         // Run shaders
         shader.use();
-
-        // Compute transformations
-        glm::mat4 transform = createTransformationMatrix();
-
-        // Asssign uniforms for shaders
-        if (!shader.setInt("texture1", 0) ||
-            !shader.setMatrix4("transform", transform))
-            return EXIT_FAILURE;
         
+        // Update models
+        cube.Update(glm::vec3(), (float)glfwGetTime() * 50.0f);
+
         // Draw models
-        cube.Draw();
+        if (!cube.Draw(view, projection))
+            return EXIT_FAILURE;
 
         // Double buffering
         glfwSwapBuffers(window);
