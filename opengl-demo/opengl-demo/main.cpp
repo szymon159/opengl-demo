@@ -3,8 +3,8 @@
 #include "window.hpp"
 #include "shader.hpp"
 #include "model.hpp"
-#include "cuboid.hpp"
-#include "rectangle.hpp"
+#include "cube.hpp"
+#include "square.hpp"
 #include "scene.hpp"
 
 using namespace Window;
@@ -43,7 +43,7 @@ int main()
         return EXIT_FAILURE;
 
     glEnable(GL_DEPTH_TEST);
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, kWindowWidth, kWindowHeight);
     
     // TODO: Link shaders in compile-time or make it work when started from .exe
     Shader shader("vertexShader.vert", "fragmentShader.frag");
@@ -51,26 +51,34 @@ int main()
         return EXIT_FAILURE;
 
     // Projection matrix 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)(WINDOW_WIDTH / WINDOW_HEIGHT), 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)kWindowWidth / (float)kWindowHeight, 0.1f, 100.0f);
 
     // Create models and add them to a scene
     Scene scene(projection);
-    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
-    if (!cube.IsDefined)
+    Cube staticCube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    if (!staticCube.IsDefined)
         return EXIT_FAILURE;
-    scene.AddModel(&cube);
+    scene.AddModel(&staticCube);
 
-    Rectangle rect(glm::vec3(), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f), &shader, "grass.jpg");
-    if (!rect.IsDefined)
+    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    if (!movingCube.IsDefined)
         return EXIT_FAILURE;
-    scene.AddModel(&rect);
+    scene.AddModel(&movingCube);
+
+    Square floor(glm::vec3(), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f), &shader, "grass.jpg");
+    if (!floor.IsDefined)
+        return EXIT_FAILURE;
+    scene.AddModel(&floor);
 
     // Create cameras
     Camera staticCamera(glm::vec3(0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
-    Camera trackingCamera(glm::vec3(0.5f, -1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
-    trackingCamera.SetTargetModel(&cube);
+    Camera trackingCamera(glm::vec3(0.5f, -2.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.1f));
+    Camera followingCamera(glm::vec3(-0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f), false);
+    trackingCamera.SetTargetModel(&movingCube);
+    followingCamera.SetTargetModel(&movingCube);
     scene.AddCamera(&staticCamera);
     scene.AddCamera(&trackingCamera);
+    scene.AddCamera(&followingCamera);
 
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))

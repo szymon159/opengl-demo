@@ -43,13 +43,16 @@ public:
 
     glm::vec3 GetGlobalPosition()
     {
-        return modelMatrix * glm::vec4(Position, 1.0f);
+        return modelMatrix * glm::vec4(1.0f);
     }
 
     // TODO: Do this automatically based on some lambda expression defined at the beginning
     void Update()
     {
-        Position.x = sin(glfwGetTime());
+        const float radius = 4.0f;
+
+        Position.x = sin(glfwGetTime()) * radius;
+        Position.y = cos(glfwGetTime()) * radius;
 
         updateModelMatrix();
     }

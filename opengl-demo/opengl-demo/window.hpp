@@ -5,7 +5,7 @@
 
 namespace Window
 {
-    // HACK: This variable is needed as main loop operations are not capped as drawing
+    // This variable is needed as main loop operations are not capped to monitor refresh rate
     float MaxFPS = 60.0f;
 
     void framebufferSize_callback(GLFWwindow* window, int width, int height)
@@ -19,7 +19,7 @@ namespace Window
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
         MaxFPS = (float)mode->refreshRate;
-        GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, monitor, NULL);
+        GLFWwindow* window = glfwCreateWindow(kWindowWidth, kWindowHeight, WINDOW_TITLE, monitor, NULL);
         if (window == NULL)
         {
             printf("Failed to create GLFW window\n");

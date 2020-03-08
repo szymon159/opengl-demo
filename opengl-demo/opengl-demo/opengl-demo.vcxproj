@@ -153,10 +153,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="consts.hpp" />
-    <ClInclude Include="cuboid.hpp" />
+    <ClInclude Include="cube.hpp" />
     <ClInclude Include="includes.hpp" />
     <ClInclude Include="model.hpp" />
-    <ClInclude Include="rectangle.hpp" />
+    <ClInclude Include="square.hpp" />
     <ClInclude Include="scene.hpp" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="window.hpp" />

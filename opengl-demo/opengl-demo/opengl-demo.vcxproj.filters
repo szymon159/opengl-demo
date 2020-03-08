@@ -33,10 +33,10 @@
     <ClInclude Include="model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cuboid.hpp">
+    <ClInclude Include="square.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangle.hpp">
+    <ClInclude Include="cube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

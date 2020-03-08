@@ -37,7 +37,7 @@ public:
 
 	void Update()
 	{
-		models[0]->Update();
+		models[1]->Update();
 
 		for (int i = 0; i < camerasCount; i++)
 			cameras[i]->Update();

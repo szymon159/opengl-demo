@@ -6,8 +6,8 @@
 class Camera
 {
 public:
-	Camera(glm::vec3 position, glm::vec3 target)
-		:position(position), targetPosition(target), targetModel(nullptr)
+	Camera(glm::vec3 position, glm::vec3 target, bool isStatic = true)
+		:position(position), targetPosition(target), targetModel(nullptr), isStatic(isStatic)
 	{
 
 	}
@@ -26,11 +26,8 @@ public:
 	{
 		if (targetModel)
 			targetPosition = targetModel->GetGlobalPosition();
-
-		// Move the camera
-		//const float radius = 10.0f;
-		//position.x = sin(glfwGetTime()) * radius;
-		//position.z = cos(glfwGetTime()) * radius;
+		if (!isStatic)
+			position = targetPosition - glm::vec3(1.0f);
 	}
 
 	glm::mat4 GetViewMatrix()
@@ -41,5 +38,6 @@ public:
 private:
 	glm::vec3 position;
 	glm::vec3 targetPosition;
+	bool isStatic;
 	Model* targetModel;
 };
