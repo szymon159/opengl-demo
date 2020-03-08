@@ -23,3 +23,4 @@ typedef unsigned char uchar;
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <vector>
