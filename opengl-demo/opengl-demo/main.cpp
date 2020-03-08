@@ -71,7 +71,7 @@ int main()
     scene.AddModel(&floor);
 
     // Create cameras
-    Camera staticCamera(glm::vec3(0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
+    Camera staticCamera(glm::vec3(-0.5f, -1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
     Camera trackingCamera(glm::vec3(0.5f, -2.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.1f));
     Camera followingCamera(glm::vec3(-0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f), false);
     trackingCamera.SetTargetModel(&movingCube);
