@@ -55,7 +55,7 @@ int main()
 
     // Create models and add them to a scene
     Scene scene(projection);
-    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.5f), &shader, "wall.jpg");
+    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.2f), &shader, "wall.jpg");
     if (!cube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&cube);
@@ -66,13 +66,16 @@ int main()
     scene.AddModel(&rect);
 
     // Create cameras
-    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f));
-    scene.AddCamera(&camera);
+    Camera staticCamera(glm::vec3(0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
+    Camera followingCamera(glm::vec3(0.5f, -1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
+    followingCamera.SetTargetModel(&cube);
+    scene.AddCamera(&staticCamera);
+    scene.AddCamera(&followingCamera);
     
     while (!glfwWindowShouldClose(window))
     {
         // Process input
-        processInput(window);
+        processInput(window, &scene);
 
         // Clear the scene
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

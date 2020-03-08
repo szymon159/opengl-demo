@@ -3,7 +3,7 @@
 #include "includes.hpp"
 
 #include "model.hpp"
-#include "camera.cpp"
+#include "camera.hpp"
 
 class Scene
 {
@@ -29,8 +29,16 @@ public:
 		camerasCount++;
 	}
 
+	void ToggleActiveCamera(int newActiveCameraId)
+	{
+		if (newActiveCameraId < camerasCount)
+			activeCameraId = newActiveCameraId;
+	}
+
 	void Update()
 	{
+		models[0]->Update();
+
 		for (int i = 0; i < camerasCount; i++)
 			cameras[i]->Update();
 	}

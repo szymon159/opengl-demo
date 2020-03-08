@@ -41,11 +41,15 @@ public:
         updateModelMatrix();
 	}
 
-    // TODO: Do this automatically based on some lambda expression defined at the beginning
-    void Update(glm::vec3 position, float angleDegrees)
+    glm::vec3 GetGlobalPosition()
     {
-        Position = position;
-        AngleDegrees = angleDegrees;
+        return modelMatrix * glm::vec4(Position, 1.0f);
+    }
+
+    // TODO: Do this automatically based on some lambda expression defined at the beginning
+    void Update()
+    {
+        Position.x = sin(glfwGetTime());
 
         updateModelMatrix();
     }
