@@ -30,8 +30,8 @@ namespace Window
     //
     // Cameras:
     // 1 - static
-    // 2 - following
-    // 3 - moving
+    // 2 - tracking (not moving)
+    // 3 - following (moving)
     //
     // Display mode:
     // Q - filled polygons

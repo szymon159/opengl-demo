@@ -67,10 +67,10 @@ int main()
 
     // Create cameras
     Camera staticCamera(glm::vec3(0.5f, 1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
-    Camera followingCamera(glm::vec3(0.5f, -1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
-    followingCamera.SetTargetModel(&cube);
+    Camera trackingCamera(glm::vec3(0.5f, -1.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.1f));
+    trackingCamera.SetTargetModel(&cube);
     scene.AddCamera(&staticCamera);
-    scene.AddCamera(&followingCamera);
+    scene.AddCamera(&trackingCamera);
     
     while (!glfwWindowShouldClose(window))
     {
