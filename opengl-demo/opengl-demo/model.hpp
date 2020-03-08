@@ -58,18 +58,20 @@ private:
     // Sets up VAO.
     // If paramCount == 1: each vertex has coordinates xyz
     // Else: each vertex has coordinates xyz and textureCoordinates xy
-    void setVAO(const float* vertices, uint verticesCount, int paramCount)
+    void setVAO(const float vertices[], uint verticesCount, int paramCount)
     {
+        int stride = paramCount == 1 ? 3 * sizeof(float) : 5 * sizeof(float);
+        int verticesSize = stride * verticesCount;
+
         uint VBO;
         glGenVertexArrays(1, &vaoId);
         glGenBuffers(1, &VBO);
 
         glBindVertexArray(vaoId);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
 
         // Set vertex attributes
-        int stride = paramCount == 1 ? 3 * sizeof(float) : 5 * sizeof(float);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
         glEnableVertexAttribArray(0);
         if (paramCount == 2)
