@@ -49,11 +49,11 @@ int main()
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 
-    Cuboid cube(glm::vec3(), 0, glm::vec3(0.5f, 1.0f, 0.0f), &shader, "wall.jpg");
+    Cuboid cube(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm:: vec3(0.5f), &shader, "wall.jpg");
     if (!cube.IsDefined)
         return EXIT_FAILURE;
 
-    Rectangle rect(glm::vec3(), -55.0f, glm::vec3(1.0f, 0.0f, 0.0f), &shader, "grass.jpg");
+    Rectangle rect(glm::vec3(), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f), &shader, "grass.jpg");
     if (!rect.IsDefined)
         return EXIT_FAILURE;
 
@@ -74,7 +74,7 @@ int main()
         shader.use();
         
         // Update models
-        cube.Update(glm::vec3(), (float)glfwGetTime() * 50.0f);
+        //cube.Update(glm::vec3(), (float)glfwGetTime() * 50.0f);
 
         // Draw models
         if (!cube.Draw(view, projection))

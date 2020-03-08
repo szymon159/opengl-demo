@@ -13,17 +13,17 @@ public:
 
     // XYZ position of the center of model
     glm::vec3 Position;
-    
     // Rotation angle in degrees
     float AngleDegrees;
-
     // The axis to rotate around
     glm::vec3 RotationAxis;
+    // Vector indicating the scale by each axis
+    glm::vec3 Scale;
 
     // Binds model with following vertices to VAO and sets its location and texture attributes (if path not empty)
     // Vertices is the array with 3 or 5 values for each vetex: coordinates xyz and textureCoordinates xy (if path not empty)
-    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, Shader *shader, std::string texturePath = "")
-        :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), shader(shader)
+    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader *shader, std::string texturePath = "")
+        :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader)
 	{
         // Check if model has texture or not
         int paramCount = texturePath == "" ? 1 : 2;
@@ -133,7 +133,8 @@ private:
     // Creates model matrix out of Position and AngleDegrees
     void updateModelMatrix()
     {
-        modelMatrix = glm::translate(glm::mat4(1.0f), Position);
+        modelMatrix = glm::scale(glm::mat4(1.0f), Scale);
+        modelMatrix = glm::translate(modelMatrix, Position);
         modelMatrix = glm::rotate(modelMatrix, glm::radians(AngleDegrees), RotationAxis);
     }
 };
