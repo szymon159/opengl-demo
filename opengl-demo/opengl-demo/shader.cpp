@@ -146,7 +146,7 @@ int Shader::getUnifromLocation(const std::string& name) const
     int uniformLocation = glGetUniformLocation(ID, name.c_str());
     if (uniformLocation == -1)
     {
-        printf("Unable to find uniform: intensityFactor\n");
+        printf("Unable to find uniform: %s\n", name.c_str());
     }
 
     return uniformLocation;

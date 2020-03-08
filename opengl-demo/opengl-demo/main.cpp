@@ -55,12 +55,12 @@ int main()
 
     // Create models and add them to a scene
     Scene scene(projection);
-    Cube staticCube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    Cube staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
     if (!staticCube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.5f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&movingCube);
@@ -80,6 +80,15 @@ int main()
     scene.AddCamera(&trackingCamera);
     scene.AddCamera(&followingCamera);
 
+    // Lights
+    Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
+    if (!lightShader.IsDefined)
+        return EXIT_FAILURE;
+    Cube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader);
+    if (!basicLightSource.IsDefined)
+        return EXIT_FAILURE;
+    scene.AddModel(&basicLightSource);
+
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))
     {
@@ -98,11 +107,7 @@ int main()
         // Clear the scene
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // Run shaders
-        // TODO: Move it or delete
-        shader.Use();
-        
+       
         // Update models
         scene.Update();
 

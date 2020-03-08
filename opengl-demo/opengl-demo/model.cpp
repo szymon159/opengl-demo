@@ -19,6 +19,7 @@ Model::Model(const float vertices[], uint verticesCount, glm::vec3 position, flo
     }
 
     updateModelMatrix();
+    IsDefined = true;
 }
 
 glm::vec3 Model::GetGlobalPosition()
@@ -29,7 +30,7 @@ glm::vec3 Model::GetGlobalPosition()
 // TODO: Do this automatically based on some lambda expression defined at the beginning
 void Model::Update()
 {
-    const float radius = 4.0f;
+    const float radius = 0.8f;
 
     Position.x = (float)sin(glfwGetTime()) * radius;
     Position.y = (float)cos(glfwGetTime()) * radius;
@@ -39,10 +40,11 @@ void Model::Update()
 
 bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
+    shader->Use();
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
     // Asssign uniforms for shaders
-    if (!shader->SetInt("texture1", 0) ||
+    if ((textureId != 0 && !shader->SetInt("texture1", 0)) ||
         !shader->SetMatrix4("transform", transformationMatrix))
     {
         return FAILURE;
@@ -52,6 +54,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
     glBindTexture(GL_TEXTURE_2D, textureId);
     glBindVertexArray(vaoId);
     glDrawArrays(GL_TRIANGLES, 0, verticesCount);
+    glUseProgram(0);
 
     return SUCCESS;
 }
@@ -112,8 +115,8 @@ void Model::loadTexure(std::string texturePath)
 
 void Model::updateModelMatrix()
 {
-    modelMatrix = glm::scale(glm::mat4(1.0f), Scale);
-    modelMatrix = glm::translate(modelMatrix, Position);
+    modelMatrix = glm::translate(glm::mat4(1.0f), Position);
     modelMatrix = glm::rotate(modelMatrix, glm::radians(AngleDegrees), RotationAxis);
+    modelMatrix = glm::scale(modelMatrix, Scale);
 }
 //
