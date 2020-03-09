@@ -4,6 +4,7 @@
 
 #include "cube.hpp"
 
+// TODO: Move to cpp file when adding more methods
 class LightCube :public Cube
 {
 public:
@@ -15,12 +16,13 @@ public:
 
 	}
 
-    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) override
+    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
     {
         shader->Use();
         glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
         // Asssign uniforms for shaders
+        // TODO: Move it to separate method?
         if (!shader->SetVec3("color", Color) ||
             !shader->SetMatrix4("transform", transformationMatrix))
         {
@@ -32,6 +34,12 @@ public:
         glUseProgram(0);
 
         return SUCCESS;
+    }
+
+    // Light is ignored as no other light can change color of light source
+    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor) override
+    {
+        return Draw(viewMatrix, projectionMatrix);
     }
 
 };

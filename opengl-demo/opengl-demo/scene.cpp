@@ -55,10 +55,15 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 void Scene::Update()
 {
 	for (int i = 0; i < modelsCount; i++)
+	{
 		models[i]->Update();
+	}
 
 	for (int i = 0; i < camerasCount; i++)
 		cameras[i]->Update();
+
+	for (int i = 0; i < lightsCount; i++)
+		lights[i]->Update();
 }
 
 bool Scene::Draw()
@@ -67,7 +72,8 @@ bool Scene::Draw()
 
 	for (int i = 0; i < modelsCount; i++)
 	{
-		if (!models[i]->Draw(viewMatrix, projectionMatrix))
+		// TODO: Multiple lights
+		if (!models[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color))
 			return FAILURE;
 	}
 

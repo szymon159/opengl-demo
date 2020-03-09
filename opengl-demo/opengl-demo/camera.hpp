@@ -1,6 +1,7 @@
 #pragma once
 
 #include "includes.hpp"
+
 #include "model.hpp"
 
 class Camera

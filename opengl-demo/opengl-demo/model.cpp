@@ -44,14 +44,17 @@ void Model::Update()
     updateModelMatrix();
 }
 
-bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
+bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor)
 {
     shader->Use();
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
     // Asssign uniforms for shaders
     if ((textureId != 0 && !shader->SetInt("texture1", 0)) ||
-        !shader->SetMatrix4("transform", transformationMatrix))
+        !shader->SetMatrix4("transform", transformationMatrix) ||
+        !shader->SetMatrix4("modelMatrix", modelMatrix) ||
+        !shader->SetVec3("lightPos", lightPos) ||
+        !shader->SetVec3("lightColor", lightColor))
     {
         return FAILURE;
     }
