@@ -27,6 +27,11 @@ glm::vec3 Model::GetGlobalPosition()
     return modelMatrix * glm::vec4(1.0f);
 }
 
+Shader* Model::GetShader()
+{
+    return shader;
+}
+
 void Model::SetUpdateFunction(std::function<void(glm::vec3&, float&)> function)
 {
     updateFunction = function;
@@ -46,8 +51,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 
     // Asssign uniforms for shaders
     if ((textureId != 0 && !shader->SetInt("texture1", 0)) ||
-        !shader->SetMatrix4("transform", transformationMatrix) ||
-        !shader->SetVec3("ambient", ambient))
+        !shader->SetMatrix4("transform", transformationMatrix))
     {
         return FAILURE;
     }
@@ -59,10 +63,6 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
     glUseProgram(0);
 
     return SUCCESS;
-}
-void Model::SetAmbientFactor(glm::vec3 ambientFactor)
-{
-    ambient = ambientFactor;
 }
 //
 

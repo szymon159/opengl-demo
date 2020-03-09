@@ -25,10 +25,10 @@ public:
     Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath = "");
     
     glm::vec3 GetGlobalPosition();
+    Shader* GetShader();
     void SetUpdateFunction(std::function<void(glm::vec3&, float&)> function);
     void Update();
     bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-    void SetAmbientFactor(glm::vec3 ambientFactor);
 
 private:
 	uint vaoId;
@@ -37,7 +37,6 @@ private:
     glm::mat4 modelMatrix;
     Shader* shader;
     std::function<void(glm::vec3&, float&)> updateFunction = [](glm::vec3& position, float& roatationAngle) {};
-    glm::vec3 ambient;
 
     // Sets up VAO.
     // If paramCount == 1: each vertex has coordinates xyz

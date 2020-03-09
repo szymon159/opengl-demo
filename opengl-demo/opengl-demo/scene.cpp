@@ -1,7 +1,7 @@
 #include "scene.hpp"
 
 Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambientColor)
-	: projectionMatrix(projectionMatrix)
+	: projectionMatrix(projectionMatrix), ambient(ambientStrength * ambientColor)
 {
 	models.clear();
 	cameras.clear();
@@ -12,7 +12,7 @@ Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambien
 void Scene::AddModel(Model* model)
 {
 	models.push_back(model);
-	model->SetAmbientFactor(ambient);
+	model->GetShader()->SetVec3("ambient", ambient);
 	modelsCount++;
 }
 
@@ -33,7 +33,12 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 	ambient = ambientStrength * ambientColor;
 
 	for (int i = 0; i < modelsCount; i++)
-		models[i]->SetAmbientFactor(ambient);
+	{
+		Shader* shader = models[i]->GetShader();
+		
+		shader->Use();
+		shader->SetVec3("ambient", ambient);
+	}
 }
 
 void Scene::Update()
