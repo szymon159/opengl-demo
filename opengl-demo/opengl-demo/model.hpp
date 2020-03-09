@@ -2,6 +2,7 @@
 
 #include "includes.hpp"
 
+#include "modelType.hpp"
 #include "shader.hpp"
 
 // TODO: Change unnecessary public variables to private
@@ -39,9 +40,9 @@ private:
     std::function<void(glm::vec3&, float&)> updateFunction = [](glm::vec3& position, float& roatationAngle) {};
 
     // Sets up VAO.
-    // If paramCount == 1: each vertex has coordinates xyz
-    // Else: each vertex has coordinates xyz and textureCoordinates xy
-    void setVAO(const float vertices[], int paramCount);
+    // If modelType == Non-Textured: each vertex has coordinates xyz and normals xyz
+    // Else: each vertex has coordinates xyz, normals xyz and textureCoordinates xy
+    void setVAO(const float vertices[], ModelType modelType);
     // Loads texture
     void loadTexure(std::string texturePath);
     // Creates model matrix out of Position and AngleDegrees

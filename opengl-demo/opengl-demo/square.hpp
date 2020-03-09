@@ -4,24 +4,24 @@
 
 #define SQUARE_VERTICES 6
 
-constexpr float kSquareVertices[SQUARE_VERTICES * 3] =
+constexpr float kSquareVertices[SQUARE_VERTICES * 6] =
 {
-     1.0f,  1.0f,  0.0f,
-     1.0f, -1.0f,  0.0f,
-    -1.0f,  1.0f,  0.0f,
-     1.0f, -1.0f,  0.0f,
-    -1.0f, -1.0f,  0.0f,
-    -1.0f,  1.0f,  0.0f
+     1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f
 };
 
-constexpr float kTexturedSquareVertices[SQUARE_VERTICES * 5] =
+constexpr float kTexturedSquareVertices[SQUARE_VERTICES * 8] =
 {
-     1.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-     1.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-    -1.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-     1.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-    -1.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-    -1.0f,  1.0f,  0.0f,  0.0f, 1.0f
+     1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f
 };
 
 class Square : public Model
