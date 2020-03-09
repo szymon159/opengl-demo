@@ -60,9 +60,18 @@ int main()
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.2f), &shader, "wall.jpg");
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
+    // TODO: Move it
+    std::function<void(glm::vec3&, float&)> movingCubeUpdateFunction = [](glm::vec3& position, float& rotationAngle) {
+        const float radius = 0.8f;
+
+        position.x = (float)sin(glfwGetTime()) * radius;
+        position.y = (float)cos(glfwGetTime()) * radius;
+        rotationAngle = 100.0f * glfwGetTime();
+    };
+    movingCube.SetUpdateFunction(movingCubeUpdateFunction);
     scene.AddModel(&movingCube);
 
     Square floor(glm::vec3(), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f), &shader, "grass.jpg");

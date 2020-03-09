@@ -27,13 +27,15 @@ glm::vec3 Model::GetGlobalPosition()
     return modelMatrix * glm::vec4(1.0f);
 }
 
+void Model::SetUpdateFunction(std::function<void(glm::vec3&, float&)> function)
+{
+    updateFunction = function;
+}
+
 // TODO: Do this automatically based on some lambda expression defined at the beginning
 void Model::Update()
 {
-    const float radius = 0.8f;
-
-    Position.x = (float)sin(glfwGetTime()) * radius;
-    Position.y = (float)cos(glfwGetTime()) * radius;
+    updateFunction(Position, AngleDegrees);
 
     updateModelMatrix();
 }
