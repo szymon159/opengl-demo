@@ -29,9 +29,9 @@ public:
     Shader* GetShader();
     void SetUpdateFunction(std::function<void(glm::vec3&, float&)> function);
     void Update();
-    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+    virtual bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
-private:
+protected:
 	uint vaoId;
     uint textureId;
     uint verticesCount;

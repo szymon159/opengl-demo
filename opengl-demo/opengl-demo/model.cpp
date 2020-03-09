@@ -6,7 +6,7 @@ Model::Model(const float vertices[], uint verticesCount, glm::vec3 position, flo
     :verticesCount(verticesCount), Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader)
 {
     // Check if model has texture or not
-    ModelType modelType = texturePath == "" ? NonTextured : Textured;
+    ModelType modelType = texturePath == "" ? ModelType::NonTextured : ModelType::Textured;
 
     setVAO(vertices, modelType);
     if (!vaoId)
@@ -71,7 +71,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 //
 void Model::setVAO(const float vertices[], ModelType modelType)
 {
-    int stride = modelType == NonTextured ? 6 * sizeof(float) : 8 * sizeof(float);
+    int stride = modelType == ModelType::NonTextured ? 6 * sizeof(float) : 8 * sizeof(float);
     int verticesSize = stride * verticesCount;
 
     uint VBO;
@@ -87,7 +87,7 @@ void Model::setVAO(const float vertices[], ModelType modelType)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    if (modelType == Textured)
+    if (modelType == ModelType::Textured)
     {
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
         glEnableVertexAttribArray(2);

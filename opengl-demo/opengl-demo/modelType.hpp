@@ -1,4 +1,4 @@
-enum ModelType
+enum class ModelType
 {
 	NonTextured,
 	Textured

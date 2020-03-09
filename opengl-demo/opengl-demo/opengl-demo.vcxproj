@@ -155,6 +155,7 @@
     <ClInclude Include="consts.hpp" />
     <ClInclude Include="cube.hpp" />
     <ClInclude Include="includes.hpp" />
+    <ClInclude Include="lightCube.hpp" />
     <ClInclude Include="model.hpp" />
     <ClInclude Include="square.hpp" />
     <ClInclude Include="scene.hpp" />

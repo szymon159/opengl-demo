@@ -5,6 +5,7 @@
 #include "model.hpp"
 #include "cube.hpp"
 #include "square.hpp"
+#include "lightCube.hpp"
 #include "scene.hpp"
 
 using namespace window;
@@ -90,14 +91,14 @@ int main()
     scene.AddCamera(&followingCamera);
 
     // Lights
-    scene.SetAmbient(0.2, glm::vec3(1.0f));
-    //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
-    //if (!lightShader.IsDefined)
-    //    return EXIT_FAILURE;
-    //Cube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader);
-    //if (!basicLightSource.IsDefined)
-    //    return EXIT_FAILURE;
-    //scene.AddModel(&basicLightSource);
+    scene.SetAmbient(1.0f, glm::vec3(1.0f));
+    Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
+    if (!lightShader.IsDefined)
+        return EXIT_FAILURE;
+    LightCube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
+    if (!basicLightSource.IsDefined)
+        return EXIT_FAILURE;
+    scene.AddLight(&basicLightSource);
 
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))

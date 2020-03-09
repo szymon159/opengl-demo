@@ -5,14 +5,19 @@ Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambien
 {
 	models.clear();
 	cameras.clear();
-	modelsCount = camerasCount = 0;
+	lights.clear();
+	modelsCount = camerasCount = lightsCount = 0;
 	activeCameraId = 0;
 }
 
 void Scene::AddModel(Model* model)
 {
+	Shader* shader = model->GetShader();
+
+	shader->Use();
+	shader->SetVec3("ambient", ambient);
+
 	models.push_back(model);
-	model->GetShader()->SetVec3("ambient", ambient);
 	modelsCount++;
 }
 
@@ -20,6 +25,12 @@ void Scene::AddCamera(Camera* camera)
 {
 	cameras.push_back(camera);
 	camerasCount++;
+}
+
+void Scene::AddLight(LightCube* light)
+{
+	lights.push_back(light);
+	lightsCount++;
 }
 
 void Scene::ToggleActiveCamera(int newActiveCameraId)
@@ -57,6 +68,12 @@ bool Scene::Draw()
 	for (int i = 0; i < modelsCount; i++)
 	{
 		if (!models[i]->Draw(viewMatrix, projectionMatrix))
+			return FAILURE;
+	}
+
+	for (int i = 0; i < lightsCount; i++)
+	{
+		if (!lights[i]->Draw(viewMatrix, projectionMatrix))
 			return FAILURE;
 	}
 
