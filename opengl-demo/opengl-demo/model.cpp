@@ -32,7 +32,6 @@ void Model::SetUpdateFunction(std::function<void(glm::vec3&, float&)> function)
     updateFunction = function;
 }
 
-// TODO: Do this automatically based on some lambda expression defined at the beginning
 void Model::Update()
 {
     updateFunction(Position, AngleDegrees);
@@ -47,7 +46,8 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 
     // Asssign uniforms for shaders
     if ((textureId != 0 && !shader->SetInt("texture1", 0)) ||
-        !shader->SetMatrix4("transform", transformationMatrix))
+        !shader->SetMatrix4("transform", transformationMatrix) ||
+        !shader->SetVec3("ambient", ambient))
     {
         return FAILURE;
     }
@@ -59,6 +59,10 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
     glUseProgram(0);
 
     return SUCCESS;
+}
+void Model::SetAmbientFactor(glm::vec3 ambientFactor)
+{
+    ambient = ambientFactor;
 }
 //
 

@@ -90,13 +90,14 @@ int main()
     scene.AddCamera(&followingCamera);
 
     // Lights
-    Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
-    if (!lightShader.IsDefined)
-        return EXIT_FAILURE;
-    Cube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader);
-    if (!basicLightSource.IsDefined)
-        return EXIT_FAILURE;
-    scene.AddModel(&basicLightSource);
+    scene.SetAmbient(0.2, glm::vec3(1.0f));
+    //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
+    //if (!lightShader.IsDefined)
+    //    return EXIT_FAILURE;
+    //Cube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader);
+    //if (!basicLightSource.IsDefined)
+    //    return EXIT_FAILURE;
+    //scene.AddModel(&basicLightSource);
 
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))
@@ -114,7 +115,7 @@ int main()
         previousTime = time;
 
         // Clear the scene
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
        
         // Update models

@@ -3,10 +3,11 @@
 in vec2 texCoord;
 
 uniform sampler2D texture1;
+uniform vec3 ambient;
 
 out vec4 fragmentColor;
 
 void main()
 {
-	fragmentColor = texture(texture1, texCoord);
+	fragmentColor = vec4(ambient, 1.0) * texture(texture1, texCoord);
 }

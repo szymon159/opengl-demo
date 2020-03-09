@@ -1,6 +1,6 @@
 #include "scene.hpp"
 
-Scene::Scene(glm::mat4 projectionMatrix)
+Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambientColor)
 	: projectionMatrix(projectionMatrix)
 {
 	models.clear();
@@ -12,6 +12,7 @@ Scene::Scene(glm::mat4 projectionMatrix)
 void Scene::AddModel(Model* model)
 {
 	models.push_back(model);
+	model->SetAmbientFactor(ambient);
 	modelsCount++;
 }
 
@@ -25,6 +26,14 @@ void Scene::ToggleActiveCamera(int newActiveCameraId)
 {
 	if (newActiveCameraId < camerasCount)
 		activeCameraId = newActiveCameraId;
+}
+
+void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
+{
+	ambient = ambientStrength * ambientColor;
+
+	for (int i = 0; i < modelsCount; i++)
+		models[i]->SetAmbientFactor(ambient);
 }
 
 void Scene::Update()
