@@ -16,12 +16,12 @@ constexpr float kSquareVertices[SQUARE_VERTICES * 6] =
 
 constexpr float kTexturedSquareVertices[SQUARE_VERTICES * 8] =
 {
-     1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-     1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-    -1.0f,  1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-     1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
-    -1.0f, -1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
-    -1.0f,  1.0f,  0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f
+     1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  0.0f, 1.0f,
+     1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 0.0f, 0.0f, 1.0f,  0.0f, 1.0f
 };
 
 class Square : public Model

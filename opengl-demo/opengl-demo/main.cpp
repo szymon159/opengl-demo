@@ -95,7 +95,7 @@ int main()
     Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
     if (!lightShader.IsDefined)
         return EXIT_FAILURE;
-    LightCube basicLightSource(glm::vec3(0.5f, 0.0f, 0.05f), 0.0f, glm::vec3(1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
+    LightCube basicLightSource(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);
