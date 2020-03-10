@@ -73,7 +73,7 @@ bool Scene::Draw()
 	for (int i = 0; i < modelsCount; i++)
 	{
 		// TODO: Multiple lights
-		if (!models[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color))
+		if (!models[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color, cameras[activeCameraId]->Position))
 			return FAILURE;
 	}
 

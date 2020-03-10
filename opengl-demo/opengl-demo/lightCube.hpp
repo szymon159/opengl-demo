@@ -37,7 +37,7 @@ public:
     }
 
     // Light is ignored as no other light can change color of light source
-    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor) override
+    bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor, glm::vec3 viewPos) override
     {
         return Draw(viewMatrix, projectionMatrix);
     }

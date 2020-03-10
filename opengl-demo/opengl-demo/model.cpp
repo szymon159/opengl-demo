@@ -44,7 +44,7 @@ void Model::Update()
     updateModelMatrix();
 }
 
-bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor)
+bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor, glm::vec3 viewPos)
 {
     shader->Use();
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
@@ -55,7 +55,8 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
         !shader->SetMatrix4("modelMatrix", modelMatrix) ||
         !shader->SetMatrix4("inversedModelMatrix", glm::inverse(modelMatrix)) ||
         !shader->SetVec3("lightPos", lightPos) ||
-        !shader->SetVec3("lightColor", lightColor))
+        !shader->SetVec3("lightColor", lightColor) ||
+        !shader->SetVec3("viewPos", viewPos))
     {
         return FAILURE;
     }

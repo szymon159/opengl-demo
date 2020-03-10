@@ -29,7 +29,7 @@ public:
     Shader* GetShader();
     void SetUpdateFunction(std::function<void(glm::vec3&, float&)> function);
     void Update();
-    virtual bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor);
+    virtual bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor, glm::vec3 viewPos);
 
 protected:
 	uint vaoId;
