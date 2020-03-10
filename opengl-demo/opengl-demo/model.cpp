@@ -53,6 +53,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
     if ((textureId != 0 && !shader->SetInt("texture1", 0)) ||
         !shader->SetMatrix4("transform", transformationMatrix) ||
         !shader->SetMatrix4("modelMatrix", modelMatrix) ||
+        !shader->SetMatrix4("inversedModelMatrix", glm::inverse(modelMatrix)) ||
         !shader->SetVec3("lightPos", lightPos) ||
         !shader->SetVec3("lightColor", lightColor))
     {
