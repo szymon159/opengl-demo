@@ -108,10 +108,10 @@ int main()
         // Process input
         processInput(window, &scene);
 
-        // Lock FPS
+        // Lock FPS to 2 * MaxFPS
         float time = (float)glfwGetTime();
         float deltaTime = time - previousTime;
-        if (deltaTime < (1.0f / MaxFPS))
+        if (deltaTime < (0.5f / MaxFPS))
             continue;
         previousTime = time;
 
