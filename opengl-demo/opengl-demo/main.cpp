@@ -47,7 +47,8 @@ int main()
     glViewport(0, 0, kWindowWidth, kWindowHeight);
     
     // TODO: Link shaders in compile-time or make it work when started from .exe
-    Shader shader("vertexShader.vert", "fragmentShader.frag");
+    Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
+    //Shader shader("phongVertexShader.vert", "phongFragShader.frag");
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 
@@ -95,7 +96,7 @@ int main()
     Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
     if (!lightShader.IsDefined)
         return EXIT_FAILURE;
-    LightCube basicLightSource(glm::vec3(0.0f, 0.0f, 5.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
+    LightCube basicLightSource(glm::vec3(0.0f, 0.0f, 1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);
