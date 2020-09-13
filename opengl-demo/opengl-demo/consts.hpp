@@ -7,3 +7,5 @@
 
 constexpr int kWindowWidth = 2560;
 constexpr int kWindowHeight = 1440;
+
+const std::string modelpth = "models/3d-model.obj";

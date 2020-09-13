@@ -4,12 +4,15 @@
 #include "shader.hpp"
 #include "texture.hpp"
 
+#include <stb_image.h>
+
 // Public methods
 //
-Model::Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath)
-    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader)
+Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath, glm::vec3 modelColor)
+    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader), Color(modelColor)
 {
-    loadModel(texturePath);
+    if (texturePath != "")
+        loadModel(texturePath);
 
     updateModelMatrix();
     IsDefined = true;
@@ -48,7 +51,8 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
         !shader->SetMatrix4("inversedModelMatrix", glm::inverse(modelMatrix)) ||
         !shader->SetVec3("lightPos", lightPos) ||
         !shader->SetVec3("lightColor", lightColor) ||
-        !shader->SetVec3("viewPos", viewPos))
+        !shader->SetVec3("viewPos", viewPos) ||
+        !shader->SetVec3("modelColor", Color))
     {
         return FAILURE;
     }
@@ -98,14 +102,14 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
 void Model::loadModel(std::string texturePath)
 {
     Assimp::Importer import;
-    const aiScene* scene = import.ReadFile(texturePath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+    const aiScene* scene = import.ReadFile(texturePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         printf("ERROR::ASSIMP::%s\n", import.GetErrorString());
         return;
     }
-    auto directory = texturePath.substr(0, texturePath.find_last_of('/'));
+    texturesDir = texturePath.substr(0, texturePath.find_last_of('/'));
 
     processNode(scene->mRootNode, scene);
 }
@@ -134,14 +138,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     // Load all the vertices
     for (uint i = 0; i < mesh->mNumVertices; i++)
     {
-        vertices[i].Poistion = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
+        vertices[i].Position = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
         
         if (mesh->HasNormals())
             vertices[i].Normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
         else
             vertices[i].Normal = glm::vec3(0.0);
 
-        if (mesh->HasTextureCoords(0))
+        if (mesh->mTextureCoords[0])
             vertices[i].TexCoords = { mesh->mTextureCoords[0][i].x,  mesh->mTextureCoords[0][i].y };
         else
             vertices[i].TexCoords = glm::vec2(0.0);
@@ -192,7 +196,9 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
         }
 
         if (!shouldSkip)
-            textures[i] = Texture(str.C_Str(), textureType);
+        {
+            textures[i] = Texture(str.C_Str(), texturesDir, textureType);
+        }
 
     }
     return textures;

@@ -31,15 +31,16 @@ void Mesh::Draw(Shader*& shader) const
             break;
         }
     
-        shader->SetFloat(("material." + textures[i].GetTextureName() + textureNumber).c_str(), i);
+        auto textureName = "material." + textures[i].GetTextureName() + textureNumber;
+        shader->SetInt(textureName.c_str(), i);
         glBindTexture(GL_TEXTURE_2D, textures[i].Id);
     }
-
-    glActiveTexture(GL_TEXTURE0);
 
     glBindVertexArray(vaoId);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::setupMesh()
@@ -62,12 +63,12 @@ void Mesh::setVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint), &indices[0], GL_STATIC_DRAW);
 
     // Set vertex attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
     glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
 
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);

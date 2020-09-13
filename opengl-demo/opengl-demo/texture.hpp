@@ -12,7 +12,7 @@ public:
 	std::string Path;
 
 	Texture();
-	Texture(const std::string& name, TextureType type);
+	Texture(const std::string& name, const std::string& directory, TextureType type);
 	~Texture();
 	std::string GetTextureName() const;
 };

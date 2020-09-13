@@ -4,7 +4,7 @@
 
 #include "model.hpp"
 #include "camera.hpp"
-#include "lightCube.hpp"
+#include "lightModel.hpp"
 
 class Shader;
 
@@ -15,7 +15,7 @@ public:
 
 	void AddModel(Model* model);
 	void AddCamera(Camera* camera);
-	void AddLight(LightCube* light);
+	void AddLight(LightModel* light);
 	void ToggleActiveCamera(int newActiveCameraId);
 	void SetAmbient(float ambientStrength, glm::vec3 ambientColor);
 	void Update();
@@ -25,7 +25,7 @@ private:
 	glm::mat4 projectionMatrix;
 	std::vector<Model*> models;
 	std::vector<Camera*> cameras;
-	std::vector<LightCube*> lights;
+	std::vector<LightModel*> lights;
 	int modelsCount;
 	int camerasCount;
 	int lightsCount;

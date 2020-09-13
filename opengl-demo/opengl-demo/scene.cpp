@@ -29,7 +29,7 @@ void Scene::AddCamera(Camera* camera)
 	camerasCount++;
 }
 
-void Scene::AddLight(LightCube* light)
+void Scene::AddLight(LightModel* light)
 {
 	lights.push_back(light);
 	lightsCount++;
@@ -81,7 +81,7 @@ bool Scene::Draw()
 
 	for (int i = 0; i < lightsCount; i++)
 	{
-		if (!lights[i]->Draw(viewMatrix, projectionMatrix))
+		if (!lights[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color, cameras[activeCameraId]->Position))
 			return FAILURE;
 	}
 

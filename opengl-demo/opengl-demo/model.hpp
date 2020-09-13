@@ -23,11 +23,12 @@ public:
     glm::vec3 RotationAxis;
     // Vector indicating the scale by each axis
     glm::vec3 Scale;
+    // Vector indicating object color if models cannot be loaded
+    glm::vec3 Color;
 
-    // Binds model with following vertices to VAO and sets its location and texture attributes (if path not empty)
-    // Vertices is the array with 3 or 5 values for each vetex: coordinates xyz and textureCoordinates xy (if path not empty)
-    Model(const float vertices[], uint verticesCount, glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath);
-    
+    // Constructs the model from given object file
+    Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string modelPath, glm::vec3 modelColor);
+
     glm::vec3 GetGlobalPosition();
     Shader* GetShader();
     void SetUpdateFunction(std::function<void(glm::vec3&, float&)> function);
@@ -39,6 +40,7 @@ protected:
     Shader* shader;
     std::function<void(glm::vec3&, float&)> updateFunction = [](glm::vec3& position, float& roatationAngle) {};
     std::vector<Mesh> meshes;
+    std::string texturesDir;
     // TODO: Move to scene
     std::vector<Texture> loadedTextures;
 

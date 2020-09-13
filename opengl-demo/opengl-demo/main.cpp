@@ -3,9 +3,7 @@
 #include "window.hpp"
 #include "shader.hpp"
 #include "model.hpp"
-#include "cube.hpp"
-#include "square.hpp"
-#include "lightCube.hpp"
+#include "lightModel.hpp"
 #include "scene.hpp"
 
 using namespace window;
@@ -57,26 +55,27 @@ int main()
 
     // Create models and add them to a scene
     Scene scene(projection);
-    Cube staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+
+    Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.002f), &shader, modelpth, glm::vec3(1.f, 0.f, 0.f));
     if (!staticCube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Cube movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.2f), &shader, "wall.jpg");
+    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, modelpth, glm::vec3(0.f, 1.f, 0.f));
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
     // TODO: Move it
-    std::function<void(glm::vec3&, float&)> movingCubeUpdateFunction = [](glm::vec3& position, float& rotationAngle) {
+    std::function<void(glm::vec3&, float&)> moving_cube_update_func = [](glm::vec3& position, float& rotationAngle) {
         const float radius = 0.8f;
 
         position.x = (float)sin(glfwGetTime()) * radius;
         position.y = (float)cos(glfwGetTime()) * radius;
         rotationAngle = 100.0f * glfwGetTime();
     };
-    movingCube.SetUpdateFunction(movingCubeUpdateFunction);
+    movingCube.SetUpdateFunction(moving_cube_update_func);
     scene.AddModel(&movingCube);
 
-    Square floor(glm::vec3(), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f), &shader, "grass.jpg");
+    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.00001f), &shader, "models/cube.obj", glm::vec3(0.f, 0.f, 1.f));
     if (!floor.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&floor);
@@ -92,11 +91,12 @@ int main()
     scene.AddCamera(&followingCamera);
 
     // Lights
-    scene.SetAmbient(1.0f, glm::vec3(1.0f));
-    Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
-    if (!lightShader.IsDefined)
+    scene.SetAmbient(0.2f, glm::vec3(1.0f));
+    Shader lightShader("phongVertexShader.vert", "phongFragShader.frag");
+    //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
+   if (!lightShader.IsDefined)
         return EXIT_FAILURE;
-    LightCube basicLightSource(glm::vec3(0.0f, 0.0f, 1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.1f), &lightShader, glm::vec3(1.0f));
+    LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 1.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, glm::vec3(0.f, 0.f, 0.f));
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);
