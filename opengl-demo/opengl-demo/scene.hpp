@@ -6,6 +6,8 @@
 #include "camera.hpp"
 #include "lightCube.hpp"
 
+class Shader;
+
 class Scene
 {
 public:

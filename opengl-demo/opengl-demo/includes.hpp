@@ -17,6 +17,11 @@ typedef unsigned char uchar;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// Assimp headers
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 // Common headers
 #include <cstdlib>
 #include <cstdio>

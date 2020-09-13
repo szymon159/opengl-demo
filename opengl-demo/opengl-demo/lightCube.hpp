@@ -18,20 +18,20 @@ public:
 
     bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
     {
-        shader->Use();
-        glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
+        //shader->Use();
+        //glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
-        // Asssign uniforms for shaders
-        // TODO: Move it to separate method?
-        if (!shader->SetVec3("color", Color) ||
-            !shader->SetMatrix4("transform", transformationMatrix))
-        {
-            return FAILURE;
-        }
+        //// Asssign uniforms for shaders
+        //// TODO: Move it to separate method?
+        //if (!shader->SetVec3("color", Color) ||
+        //    !shader->SetMatrix4("transform", transformationMatrix))
+        //{
+        //    return FAILURE;
+        //}
 
-        glBindVertexArray(vaoId);
-        glDrawArrays(GL_TRIANGLES, 0, verticesCount);
-        glUseProgram(0);
+        //glBindVertexArray(vaoId);
+        //glDrawArrays(GL_TRIANGLES, 0, verticesCount);
+        //glUseProgram(0);
 
         return SUCCESS;
     }

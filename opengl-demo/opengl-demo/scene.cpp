@@ -1,5 +1,7 @@
 #include "scene.hpp"
 
+#include "shader.hpp"
+
 Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambientColor)
 	: projectionMatrix(projectionMatrix), ambient(ambientStrength * ambientColor)
 {
