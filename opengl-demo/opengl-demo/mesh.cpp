@@ -13,34 +13,35 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<uint> indices, std::vector<
 
 void Mesh::Draw(Shader*& shader) const
 {
-    uint diffuseCount = 1;
-    uint specularCount = 1;
-    for (int i = 0; i < textures.size(); i++)
-    {
-        // Activate proper texture unit before binding
-        glActiveTexture(GL_TEXTURE0 + i);
+    // TODO: Improve model texture loading
+    //uint diffuseCount = 1;
+    //uint specularCount = 1;
+    //for (int i = 0; i < textures.size(); i++)
+    //{
+    //    // Activate proper texture unit before binding
+    //    glActiveTexture(GL_TEXTURE0 + i);
 
-        std::string textureNumber;
-        switch (textures[i].Type)
-        {
-        case TextureType::Diffuse:
-            textureNumber = std::to_string(diffuseCount++);
-            break;
-        case TextureType::Specular:
-            textureNumber = std::to_string(specularCount++);
-            break;
-        }
-    
-        auto textureName = "material." + textures[i].GetTextureName() + textureNumber;
-        shader->SetInt(textureName.c_str(), i);
-        glBindTexture(GL_TEXTURE_2D, textures[i].Id);
-    }
+    //    std::string textureNumber;
+    //    switch (textures[i].Type)
+    //    {
+    //    case TextureType::Diffuse:
+    //        textureNumber = std::to_string(diffuseCount++);
+    //        break;
+    //    case TextureType::Specular:
+    //        textureNumber = std::to_string(specularCount++);
+    //        break;
+    //    }
+    //
+    //    auto textureName = "material." + textures[i].GetTextureName() + textureNumber;
+    //    shader->SetVec3(textureName.c_str(), i);
+    //    glBindTexture(GL_TEXTURE_2D, textures[i].Id);
+    //}
 
     glBindVertexArray(vaoId);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    glActiveTexture(GL_TEXTURE0);
+    //glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::setupMesh()

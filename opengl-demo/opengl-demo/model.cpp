@@ -8,8 +8,8 @@
 
 // Public methods
 //
-Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath, glm::vec3 modelColor)
-    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader), Color(modelColor)
+Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath, const Material& material)
+    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader), ModelMaterial(material)
 {
     if (texturePath != "")
         loadModel(texturePath);
@@ -52,7 +52,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
         !shader->SetVec3("lightPos", lightPos) ||
         !shader->SetVec3("lightColor", lightColor) ||
         !shader->SetVec3("viewPos", viewPos) ||
-        !shader->SetVec3("modelColor", Color))
+        !shader->SetMaterial("material", ModelMaterial))
     {
         return FAILURE;
     }

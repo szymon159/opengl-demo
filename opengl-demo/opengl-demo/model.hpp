@@ -4,6 +4,7 @@
 
 #include "mesh.hpp"
 #include "textureType.hpp"
+#include "material.hpp"
 
 class Texture;
 class Shader;
@@ -23,11 +24,11 @@ public:
     glm::vec3 RotationAxis;
     // Vector indicating the scale by each axis
     glm::vec3 Scale;
-    // Vector indicating object color if models cannot be loaded
-    glm::vec3 Color;
+    // Material of which object is created
+    Material ModelMaterial;
 
     // Constructs the model from given object file
-    Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string modelPath, glm::vec3 modelColor);
+    Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string modelPath, const Material& material);
 
     glm::vec3 GetGlobalPosition();
     Shader* GetShader();

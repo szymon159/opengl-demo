@@ -157,6 +157,7 @@
     <ClInclude Include="consts.hpp" />
     <ClInclude Include="includes.hpp" />
     <ClInclude Include="lightModel.hpp" />
+    <ClInclude Include="material.hpp" />
     <ClInclude Include="mesh.hpp" />
     <ClInclude Include="model.hpp" />
     <ClInclude Include="scene.hpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="camera.hpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="material.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modelType.hpp" />

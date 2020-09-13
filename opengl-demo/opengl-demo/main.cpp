@@ -5,6 +5,7 @@
 #include "model.hpp"
 #include "lightModel.hpp"
 #include "scene.hpp"
+#include "material.hpp"
 
 using namespace window;
 
@@ -45,8 +46,8 @@ int main()
     glViewport(0, 0, kWindowWidth, kWindowHeight);
     
     // TODO: Link shaders in compile-time or make it work when started from .exe
-    Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
-    //Shader shader("phongVertexShader.vert", "phongFragShader.frag");
+    //Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
+    Shader shader("phongVertexShader.vert", "phongFragShader.frag");
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 
@@ -56,12 +57,12 @@ int main()
     // Create models and add them to a scene
     Scene scene(projection);
 
-    Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.002f), &shader, modelpth, glm::vec3(1.f, 0.f, 0.f));
+    Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.002f), &shader, modelpth, Material::Gold());
     if (!staticCube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, modelpth, glm::vec3(0.f, 1.f, 0.f));
+    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, modelpth, Material::CyanRubber());
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
     // TODO: Move it
@@ -75,7 +76,7 @@ int main()
     movingCube.SetUpdateFunction(moving_cube_update_func);
     scene.AddModel(&movingCube);
 
-    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.00001f), &shader, "models/cube.obj", glm::vec3(0.f, 0.f, 1.f));
+    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Pearl());
     if (!floor.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&floor);
@@ -91,12 +92,12 @@ int main()
     scene.AddCamera(&followingCamera);
 
     // Lights
-    scene.SetAmbient(0.2f, glm::vec3(1.0f));
+    scene.SetAmbient(0.5f, glm::vec3(1.0f));
     Shader lightShader("phongVertexShader.vert", "phongFragShader.frag");
     //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
    if (!lightShader.IsDefined)
         return EXIT_FAILURE;
-    LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 1.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, glm::vec3(0.f, 0.f, 0.f));
+    LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 1.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, glm::vec3(1.f));
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);

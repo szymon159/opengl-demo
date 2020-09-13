@@ -56,6 +56,7 @@ bool Shader::SetMatrix4(const std::string& name, glm::mat4 value) const
     glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(value));
     return SUCCESS;
 }
+
 bool Shader::SetVec3(const std::string& name, glm::vec3 value) const
 {
     int uniformLocation = getUnifromLocation(name);
@@ -63,6 +64,19 @@ bool Shader::SetVec3(const std::string& name, glm::vec3 value) const
         return FAILURE;
 
     glUniform3fv(uniformLocation, 1, glm::value_ptr(value));
+    return SUCCESS;
+}
+
+bool Shader::SetMaterial(const std::string& name, Material material) const
+{
+    if(!this->SetVec3(name+ ".ambient", material.Ambient) || 
+        !this->SetVec3(name + ".diffuse", material.Diffuse) ||
+        !this->SetVec3(name + ".specular", material.Specular) ||
+        !this->SetFloat(name + ".shininess", material.Shininess))
+    {
+        return FAILURE;
+    }
+
     return SUCCESS;
 }
 //

@@ -50,10 +50,10 @@ std::string Texture::GetTextureName() const
 	switch (Type)
 	{
 	case TextureType::Diffuse:
-		return "texture_diffuse";
+		return "diffuse";
 	case TextureType::Specular:
-		return "texture_specular";
+		return "specular";
 	}
 
-	return "texture_invalid";
+	return "invalid";
 }

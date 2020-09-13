@@ -3,13 +3,16 @@
 #include "includes.hpp"
 
 #include "shader.hpp"
+#include "material.hpp"
 
 // TODO: Move to cpp file when adding more methods
 class LightModel :public Model
 {
 public:
+    glm::vec3 Color;
+
 	LightModel(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, glm::vec3 lightColor)
-		: Model(position, angleDegrees, rotationAxis, scale, shader, modelpth, lightColor)
+		: Model(position, angleDegrees, rotationAxis, scale, shader, modelpth, Material::LightSource(lightColor)), Color(lightColor)
 	{
 
 	}
