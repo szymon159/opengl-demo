@@ -12,8 +12,8 @@ class LightModel :public Model
 public:
     Light* LightSource;
 
-	LightModel(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, Light* light)
-		: Model(position, angleDegrees, rotationAxis, scale, shader, "models/cube.obj", Material::LightSource(light->LightColor)), LightSource(light)
+	LightModel(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Scene* scene, Light* light)
+		: Model(position, angleDegrees, rotationAxis, scale, scene, "models/cube.obj", Material::LightSource(light->LightColor)), LightSource(light)
 	{
 
 	}

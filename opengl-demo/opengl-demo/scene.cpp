@@ -2,8 +2,8 @@
 
 #include "shader.hpp"
 
-Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambientColor)
-	: projectionMatrix(projectionMatrix), ambient(ambientStrength * ambientColor)
+Scene::Scene(glm::mat4 projectionMatrix, Shader* gouraudShader, Shader* phongShader, float ambientLightStrength, glm::vec3 ambientLightColor)
+	: projectionMatrix(projectionMatrix), ambient(ambientLightStrength* ambientLightColor), gouraudShader(gouraudShader), phongShader(phongShader)
 {
 	models.clear();
 	cameras.clear();
@@ -11,12 +11,11 @@ Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambien
 	modelsCount = camerasCount = lightsCount = 0;
 	activeCameraId = 0;
 	useBlinn = false;
+	useGouraud = false;
 }
 
 void Scene::AddModel(Model* model)
 {
-	Shader* shader = model->GetShader();
-
 	models.push_back(model);
 	modelsCount++;
 }
@@ -41,6 +40,7 @@ void Scene::ToggleActiveCamera(int newActiveCameraId)
 
 void Scene::ToggleGouraudShading()
 {
+	useGouraud = !useGouraud;
 }
 
 void Scene::ToggleBlinnLighting()
@@ -84,7 +84,7 @@ bool Scene::Draw()
 
 	for (int i = 0; i < modelsCount; i++)
 	{
-		auto shader = models[i]->GetShader();
+		auto shader = GetActiveShader();
 		shader->Use();
 
 		if (!shader->SetBool("useBlinn", useBlinn))
@@ -107,6 +107,11 @@ bool Scene::Draw()
 	//}
 
 	return SUCCESS;
+}
+
+Shader* Scene::GetActiveShader()
+{
+	return useGouraud ? gouraudShader : phongShader;
 }
 
 glm::vec3 Scene::GetAmbient()

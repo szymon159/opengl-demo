@@ -3,13 +3,14 @@
 #include "vertex.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
+#include "scene.hpp"
 
 #include <stb_image.h>
 
 // Public methods
 //
-Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string texturePath, const Material& material)
-    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), shader(shader), ModelMaterial(material)
+Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Scene* ownerScene, std::string texturePath, const Material& material)
+    : Position(position), AngleDegrees(angleDegrees), RotationAxis(rotationAxis), Scale(scale), ownerScene(ownerScene), ModelMaterial(material)
 {
     if (texturePath != "")
         loadModel(texturePath);
@@ -21,11 +22,6 @@ Model::Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm
 glm::vec3 Model::GetGlobalPosition()
 {
     return modelMatrix * glm::vec4(1.0f);
-}
-
-Shader* Model::GetShader()
-{
-    return shader;
 }
 
 void Model::SetUpdateFunction(std::function<void(glm::vec3&, float&)> function)
@@ -44,6 +40,7 @@ bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix,
 {
     //shader->Use();
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
+    auto shader = ownerScene->GetActiveShader();
 
     // Asssign uniforms for shaders
     if (!shader->SetMatrix4("projection", projectionMatrix) ||

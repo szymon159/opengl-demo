@@ -11,7 +11,7 @@ class Shader;
 class Scene
 {
 public:
-	Scene(glm::mat4 projectionMatrix, float ambientLightStrength = 0.0f, glm::vec3 ambientLightColor = glm::vec3(1.0f));
+	Scene(glm::mat4 projectionMatrix, Shader *gouraudShader, Shader *phongShader, float ambientLightStrength = 0.0f, glm::vec3 ambientLightColor = glm::vec3(1.0f));
 
 	void AddModel(Model* model);
 	void AddCamera(Camera* camera);
@@ -22,6 +22,7 @@ public:
 	void SetAmbient(float ambientStrength, glm::vec3 ambientColor);
 	void Update();
 	bool Draw();
+	Shader* GetActiveShader();
 
 	glm::vec3 GetAmbient();
 
@@ -36,4 +37,7 @@ private:
 	int activeCameraId;
 	glm::vec3 ambient;
 	bool useBlinn;
+	Shader* gouraudShader;
+	Shader* phongShader;
+	bool useGouraud;
 };

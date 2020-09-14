@@ -8,6 +8,7 @@
 
 class Texture;
 class Shader;
+class Scene;
 
 // TODO: Change unnecessary public variables to private
 class Model
@@ -28,20 +29,19 @@ public:
     Material ModelMaterial;
 
     // Constructs the model from given object file
-    Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, std::string modelPath, const Material& material);
+    Model(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Scene* ownerScene, std::string texturePath, const Material& material);
 
     glm::vec3 GetGlobalPosition();
-    Shader* GetShader();
     void SetUpdateFunction(std::function<void(glm::vec3&, float&)> function);
     void Update();
     virtual bool Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 viewPos);
 
 protected:
     glm::mat4 modelMatrix;
-    Shader* shader;
     std::function<void(glm::vec3&, float&)> updateFunction = [](glm::vec3& position, float& roatationAngle) {};
     std::vector<Mesh> meshes;
     std::string texturesDir;
+    Scene* ownerScene;
     // TODO: Move to scene
     std::vector<Texture> loadedTextures;
 
