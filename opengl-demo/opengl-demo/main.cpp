@@ -57,6 +57,7 @@ int main()
 
     // Create models and add them to a scene
     Scene scene(projection);
+    window::scene = &scene;
 
     Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.005f), &shader, "models/Z3_Lowpoly_OBJ2.obj", Material::Gold());
     if (!staticCube.IsDefined)
@@ -139,9 +140,6 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-
-        // Process input
-        processInput(window, &scene);
 
         // Lock FPS to 2 * MaxFPS
         float time = (float)glfwGetTime();

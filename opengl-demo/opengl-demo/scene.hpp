@@ -17,6 +17,8 @@ public:
 	void AddCamera(Camera* camera);
 	void AddLight(LightModel* light);
 	void ToggleActiveCamera(int newActiveCameraId);
+	void ToggleGouraudShading();
+	void ToggleBlinnLighting();
 	void SetAmbient(float ambientStrength, glm::vec3 ambientColor);
 	void Update();
 	bool Draw();

@@ -39,6 +39,15 @@ void Scene::ToggleActiveCamera(int newActiveCameraId)
 		activeCameraId = newActiveCameraId;
 }
 
+void Scene::ToggleGouraudShading()
+{
+}
+
+void Scene::ToggleBlinnLighting()
+{
+	useBlinn = !useBlinn;
+}
+
 void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 {
 	ambient = ambientStrength * ambientColor;
