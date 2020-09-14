@@ -33,4 +33,5 @@ private:
 	int lightsCount;
 	int activeCameraId;
 	glm::vec3 ambient;
+	bool useBlinn;
 };

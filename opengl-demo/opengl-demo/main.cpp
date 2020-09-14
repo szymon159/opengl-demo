@@ -116,7 +116,7 @@ int main()
         return EXIT_FAILURE;
     scene.AddLight(&pointLightModel);
 
-    SpotLight spotLight(scene.GetAmbient(), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(0.f, -0.1f, 0.07f), glm::vec3(0.f, -1.f, 0.f), glm::cos(glm::radians(15.5f)), glm::cos(glm::radians(25.f)), 1.f, 0.35f, 0.44f);
+    SpotLight spotLight(glm::vec3(0.3f) , glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(0.f, -0.1f, 0.07f), glm::vec3(0.f, -1.f, 0.f), glm::cos(glm::radians(15.5f)), glm::cos(glm::radians(25.f)), 1.f, 0.35f, 0.44f);
     LightModel spotLightSource(glm::vec3(0.f, -0.1f, 0.07f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.05f), &lightShader, &spotLight);
     if (!spotLightSource.IsDefined)
         return EXIT_FAILURE;

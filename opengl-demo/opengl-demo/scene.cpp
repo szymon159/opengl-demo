@@ -10,6 +10,7 @@ Scene::Scene(glm::mat4 projectionMatrix, float ambientStrength, glm::vec3 ambien
 	lights.clear();
 	modelsCount = camerasCount = lightsCount = 0;
 	activeCameraId = 0;
+	useBlinn = false;
 }
 
 void Scene::AddModel(Model* model)
@@ -76,6 +77,9 @@ bool Scene::Draw()
 	{
 		auto shader = models[i]->GetShader();
 		shader->Use();
+
+		if (!shader->SetBool("useBlinn", useBlinn))
+			return FAILURE;
 
 		for (const auto& light : lights)
 		{
