@@ -48,7 +48,7 @@ int main()
 
     // TODO: Link shaders in compile-time or make it work when started from .exe
     //Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
-    Shader shader("phongVertexShader.vert", "phongFragShader.frag");
+    Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
     if (!shader.IsDefined)
         return EXIT_FAILURE;
 

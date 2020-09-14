@@ -94,7 +94,7 @@ namespace window
         // Toggle gouraud shading
         else if (key == GLFW_KEY_G && action == GLFW_PRESS)
         {
-            glfwSetWindowShouldClose(window, true);
+            scene->ToggleGouraudShading();
         }
         // Toggle Blinn lighting model
         else if (key == GLFW_KEY_B && action == GLFW_PRESS)
