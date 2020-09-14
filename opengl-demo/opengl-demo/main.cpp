@@ -111,11 +111,24 @@ int main()
         return EXIT_FAILURE;
     scene.AddLight(&pointLightModel);
 
-    //DirectionalLight basicLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(0.5f), glm::vec3(0.5f), glm::vec3(-1.f));
-    //LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 25.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, &basicLight);
-    //if (!basicLightSource.IsDefined)
-    //    return EXIT_FAILURE;
-    //scene.AddLight(&basicLightSource);
+    SpotLight spotLight(scene.GetAmbient(), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(0.f, -0.1f, 0.07f), glm::vec3(0.f, -1.f, 0.f), glm::cos(glm::radians(15.5f)), glm::cos(glm::radians(25.f)), 1.f, 0.35f, 0.44f);
+    LightModel spotLightSource(glm::vec3(0.f, -0.1f, 0.07f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.05f), &lightShader, &spotLight);
+    if (!spotLightSource.IsDefined)
+        return EXIT_FAILURE;
+    std::function<void(glm::vec3&, float&)> moving_light_update_func = [&](glm::vec3& position, float& rotationAngle) {
+        const float radius = 0.8f;
+
+        position.x = (float)sin(glfwGetTime()) * radius;
+        position.y = (float)cos(glfwGetTime()) * radius;
+
+        rotationAngle = 100.0f * glfwGetTime();
+    
+        spotLight.Position = position;
+        spotLight.Direction = glm::vec3(-1.f, -1.f, 0.f) * rotationAngle * position;
+    };
+    spotLightSource.SetUpdateFunction(moving_light_update_func);
+    scene.AddLight(&spotLightSource);
+    scene.AddModel(&spotLightSource);
 
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))

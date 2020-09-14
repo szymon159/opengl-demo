@@ -13,7 +13,7 @@ public:
     Light* LightSource;
 
 	LightModel(glm::vec3 position, float angleDegrees, glm::vec3 rotationAxis, glm::vec3 scale, Shader* shader, Light* light)
-		: Model(position, angleDegrees, rotationAxis, scale, shader, modelpth, Material::LightSource(light->LightColor)), LightSource(light)
+		: Model(position, angleDegrees, rotationAxis, scale, shader, "models/cube.obj", Material::LightSource(light->LightColor)), LightSource(light)
 	{
 
 	}
@@ -26,6 +26,8 @@ public:
         //{
         //    return FAILURE;
         //}
+        
+
         return Model::Draw(viewMatrix, projectionMatrix, viewPos);
     }
 };
