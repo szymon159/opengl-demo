@@ -63,7 +63,7 @@ int main()
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, "models/SM_Pushcart_002.obj", Material::Gold());
+    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, "models/SM_Pushcart_002.obj", Material::CyanRubber());
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
     // TODO: Move it
@@ -77,7 +77,7 @@ int main()
     movingCube.SetUpdateFunction(moving_cube_update_func);
     scene.AddModel(&movingCube);
 
-    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Gold());
+    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Pearl());
     if (!floor.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&floor);
@@ -93,17 +93,29 @@ int main()
     scene.AddCamera(&followingCamera);
 
     // Lights
-    scene.SetAmbient(0.5f, glm::vec3(1.0f));
+    scene.SetAmbient(0.2f, glm::vec3(1.0f));
     Shader lightShader("phongVertexShader.vert", "phongFragShader.frag");
     //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
     if (!lightShader.IsDefined)
         return EXIT_FAILURE;
 
-    DirectionalLight basicLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(0.5f), glm::vec3(0.5f), glm::vec3(-1.f));
+    DirectionalLight basicLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(1.f), glm::vec3(0.3f), glm::vec3(-1.f, 0.f, -1.f));
     LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 25.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, &basicLight);
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);
+
+    PointLight pointLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(1.f), glm::vec3(1.f), glm::vec3(0.f, 0.f, 2.f), 1.f, 0.35f, 0.44f);
+    LightModel pointLightModel(glm::vec3(0.0f, 0.0f, 25.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, &pointLight);
+    if (!pointLightModel.IsDefined)
+        return EXIT_FAILURE;
+    scene.AddLight(&pointLightModel);
+
+    //DirectionalLight basicLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(0.5f), glm::vec3(0.5f), glm::vec3(-1.f));
+    //LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 25.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, &basicLight);
+    //if (!basicLightSource.IsDefined)
+    //    return EXIT_FAILURE;
+    //scene.AddLight(&basicLightSource);
 
     float previousTime = 0.0f;
     while (!glfwWindowShouldClose(window))

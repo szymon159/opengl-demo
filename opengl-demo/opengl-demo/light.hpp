@@ -68,11 +68,11 @@ public:
 		lightName = lightName == "" ? "pointLight" : lightName;
 
 		return
-			Light::SetUniforms(shader, lightName) ||
-			!shader->SetVec3(lightName + ".position", Position) ||
-			!shader->SetFloat(lightName + ".constant", Constant) ||
-			!shader->SetFloat(lightName + ".linear", Linear) ||
-			!shader->SetFloat(lightName + ".quadratic", Quadratic);
+			Light::SetUniforms(shader, lightName) &&
+			shader->SetVec3(lightName + ".position", Position) &&
+			shader->SetFloat(lightName + ".constant", Constant) &&
+			shader->SetFloat(lightName + ".linear", Linear) &&
+			shader->SetFloat(lightName + ".quadratic", Quadratic);
 	}
 };
 
@@ -98,13 +98,13 @@ public:
 		lightName = lightName == "" ? "spotLight" : lightName;
 
 		return
-			Light::SetUniforms(shader, lightName) ||
-			!shader->SetVec3(lightName + ".position", Position) ||
-			!shader->SetVec3(lightName + ".direction", Direction) ||
-			!shader->SetFloat(lightName + ".cutOff", CutOff) ||
-			!shader->SetFloat(lightName + ".outerCutOff", OuterCutOff) ||
-			!shader->SetFloat(lightName + ".constant", Constant) ||
-			!shader->SetFloat(lightName + ".linear", Linear) ||
-			!shader->SetFloat(lightName + ".quadratic", Quadratic);
+			Light::SetUniforms(shader, lightName) &&
+			shader->SetVec3(lightName + ".position", Position) &&
+			shader->SetVec3(lightName + ".direction", Direction) &&
+			shader->SetFloat(lightName + ".cutOff", CutOff) &&
+			shader->SetFloat(lightName + ".outerCutOff", OuterCutOff) &&
+			shader->SetFloat(lightName + ".constant", Constant) &&
+			shader->SetFloat(lightName + ".linear", Linear) &&
+			shader->SetFloat(lightName + ".quadratic", Quadratic);
 	}
 };

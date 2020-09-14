@@ -16,11 +16,6 @@ void Scene::AddModel(Model* model)
 {
 	Shader* shader = model->GetShader();
 
-	shader->Use();
-	shader->SetVec3("spotLight.ambient", ambient);
-	shader->SetVec3("pointLight.ambient", ambient);
-	shader->SetVec3("dirLight.ambient", ambient);
-
 	models.push_back(model);
 	modelsCount++;
 }
@@ -47,12 +42,12 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 {
 	ambient = ambientStrength * ambientColor;
 
-	for (int i = 0; i < modelsCount; i++)
-	{
-		Shader* shader = models[i]->GetShader();
-		
-		shader->Use();
-	}
+	//for (int i = 0; i < modelsCount; i++)
+	//{
+	//	Shader* shader = models[i]->GetShader();
+	//	
+	//	shader->Use();
+	//}
 }
 
 void Scene::Update()
