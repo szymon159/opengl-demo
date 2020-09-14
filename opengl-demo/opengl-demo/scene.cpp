@@ -62,7 +62,7 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 
 void Scene::Update()
 {
-	auto time = sin(0.3 * glfwGetTime());
+	auto time = sin(0.4 * glfwGetTime());
 	SetAmbient(time, glm::vec3(1.f));
 
 	for (int i = 0; i < modelsCount; i++)
