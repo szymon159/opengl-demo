@@ -97,12 +97,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lightVertexShader.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="lightFragmentShader.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
     <None Include="phongFragShader.frag">
       <Filter>Source Files\Shaders</Filter>
     </None>

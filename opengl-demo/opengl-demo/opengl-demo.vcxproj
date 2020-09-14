@@ -186,8 +186,6 @@
     <None Include="gouraudFragShader.frag" />
     <None Include="gouraudVertexShader.vert" />
     <None Include="phongFragShader.frag" />
-    <None Include="lightFragmentShader.frag" />
-    <None Include="lightVertexShader.vert" />
     <None Include="phongVertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
