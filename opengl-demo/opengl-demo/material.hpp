@@ -14,7 +14,8 @@ public:
 
 	static Material Gold();
 	static Material CyanRubber();
-	static Material Pearl();
+	static Material Floor();
+	static Material Ruby();
 	static Material LightSource(glm::vec3 lightColor);
 };
 

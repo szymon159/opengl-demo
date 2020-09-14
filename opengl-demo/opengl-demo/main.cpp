@@ -77,7 +77,12 @@ int main()
     movingCube.SetUpdateFunction(moving_cube_update_func);
     scene.AddModel(&movingCube);
 
-    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Pearl());
+    Model sphere(glm::vec3(0.1f, -0.3f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.001f), &shader, "models/3d-model.obj", Material::Ruby());
+    if (!sphere.IsDefined)
+        return EXIT_FAILURE;
+    scene.AddModel(&sphere);
+
+    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Floor());
     if (!floor.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&floor);

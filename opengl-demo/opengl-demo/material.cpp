@@ -27,7 +27,7 @@ Material Material::CyanRubber()
 	};
 }
 
-Material Material::Pearl()
+Material Material::Floor()
 {
 	return
 	{
@@ -35,6 +35,17 @@ Material Material::Pearl()
 		{ 0.5f, 0.429f, 0.429f },
 		{ 0.296648f, 0.296648f, 0.296648f },
 		0.088f
+	};
+}
+
+Material Material::Ruby()
+{
+	return
+	{
+		{ 0.1745f, 0.01175f, 0.01175f },
+		{ 0.61424f, 0.04136f, 0.04136f },
+		{ 0.727811f, 0.626959f, 0.626959f },
+		0.6f
 	};
 }
 
