@@ -151,7 +151,8 @@ int main()
         previousTime = time;
 
         // Clear the scene
-        glClearColor(0.5f, 0.7f, 0.95f, 1.0f);
+        auto lightIntensity = sin(0.3 * time);
+        glClearColor(lightIntensity * 0.5f, lightIntensity * 0.7f, lightIntensity * 0.95f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Update models

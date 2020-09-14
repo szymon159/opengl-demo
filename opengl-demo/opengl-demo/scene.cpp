@@ -52,16 +52,20 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 
 void Scene::Update()
 {
+	auto time = sin(0.3 * glfwGetTime());
+	SetAmbient(time, glm::vec3(1.f));
+
 	for (int i = 0; i < modelsCount; i++)
-	{
 		models[i]->Update();
-	}
 
 	for (int i = 0; i < camerasCount; i++)
 		cameras[i]->Update();
 
 	for (int i = 0; i < lightsCount; i++)
+	{
+		lights[i]->LightSource->Ambient = ambient;
 		lights[i]->Update();
+	}
 }
 
 bool Scene::Draw()
