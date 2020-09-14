@@ -40,19 +40,49 @@ void Model::Update()
     updateModelMatrix();
 }
 
-bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 lightPos, glm::vec3 lightColor, glm::vec3 viewPos)
+bool Model::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, glm::vec3 viewPos)
 {
-    shader->Use();
+    //shader->Use();
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * modelMatrix;
 
     // Asssign uniforms for shaders
-    if (!shader->SetMatrix4("transform", transformationMatrix) ||
-        !shader->SetMatrix4("modelMatrix", modelMatrix) ||
-        !shader->SetMatrix4("inversedModelMatrix", glm::inverse(modelMatrix)) ||
-        !shader->SetVec3("lightPos", lightPos) ||
-        !shader->SetVec3("lightColor", lightColor) ||
+    if (!shader->SetMatrix4("projection", projectionMatrix) ||
+        !shader->SetMatrix4("view", viewMatrix) ||
+        !shader->SetMatrix4("model", modelMatrix) ||
+        //!shader->SetVec3("lightPos", lightPos) ||
+        //!shader->SetVec3("lightColor", lightColor) ||
         !shader->SetVec3("viewPos", viewPos) ||
-        !shader->SetMaterial("material", ModelMaterial))
+        !shader->SetMaterial("material", ModelMaterial) ||
+
+
+        //!shader->SetVec3("dirLight.direction", glm::vec3(0.f, 0.f, -1.f)) ||
+        //!shader->SetVec3("dirLight.diffuse", glm::vec3(0.8f)) ||
+        //!shader->SetVec3("dirLight.specular", glm::vec3(1.f)) ||
+        //!shader->SetVec3("dirLight.ambient", glm::vec3(0.6f)) ||
+
+
+        !shader->SetVec3("pointLight.position", glm::vec3(5.5f, 5.5f, 5.2f)) ||
+        !shader->SetVec3("pointLight.lightColor", glm::vec3(0.f)) ||
+        !shader->SetFloat("pointLight.constant", 1.f) ||
+        !shader->SetFloat("pointLight.linear", 0.09f) ||
+        !shader->SetFloat("pointLight.quadratic", 0.032f) ||
+
+
+
+        !shader->SetVec3("spotLight.position", glm::vec3(-5.5f, 5.5f, 5.2f)) ||
+        !shader->SetVec3("spotLight.lightColor", glm::vec3(0.f)) ||
+        !shader->SetVec3("spotLight.direction", glm::vec3(0.f,0.f,1.f)) ||
+        !shader->SetVec3("spotLight.ambient", glm::vec3(0.6f)) ||
+        !shader->SetVec3("spotLight.diffuse", glm::vec3(0.8f)) ||
+        !shader->SetVec3("spotLight.specular", glm::vec3(1.f)) ||
+        !shader->SetFloat("spotLight.cutOff", 12.5f) ||
+        !shader->SetFloat("spotLight.outerCutOff", 15.f) ||
+        !shader->SetFloat("spotLight.constant", 1.f) ||
+        !shader->SetFloat("spotLight.linear", 0.09f) ||
+        !shader->SetFloat("spotLight.quadratic", 0.032f)
+        
+        
+        )
     {
         return FAILURE;
     }

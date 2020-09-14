@@ -69,7 +69,7 @@ bool Shader::SetVec3(const std::string& name, glm::vec3 value) const
 
 bool Shader::SetMaterial(const std::string& name, Material material) const
 {
-    if(!this->SetVec3(name+ ".ambient", material.Ambient) || 
+    if(/*!this->SetVec3(name+ ".ambient", material.Ambient) || */
         !this->SetVec3(name + ".diffuse", material.Diffuse) ||
         !this->SetVec3(name + ".specular", material.Specular) ||
         !this->SetFloat(name + ".shininess", material.Shininess))

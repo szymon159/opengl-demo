@@ -17,7 +17,9 @@ void Scene::AddModel(Model* model)
 	Shader* shader = model->GetShader();
 
 	shader->Use();
-	shader->SetVec3("ambient", ambient);
+	shader->SetVec3("spotLight.ambient", ambient);
+	shader->SetVec3("pointLight.ambient", ambient);
+	shader->SetVec3("dirLight.ambient", ambient);
 
 	models.push_back(model);
 	modelsCount++;
@@ -50,7 +52,6 @@ void Scene::SetAmbient(float ambientStrength, glm::vec3 ambientColor)
 		Shader* shader = models[i]->GetShader();
 		
 		shader->Use();
-		shader->SetVec3("ambient", ambient);
 	}
 }
 
@@ -74,16 +75,29 @@ bool Scene::Draw()
 
 	for (int i = 0; i < modelsCount; i++)
 	{
-		// TODO: Multiple lights
-		if (!models[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color, cameras[activeCameraId]->Position))
+		auto shader = models[i]->GetShader();
+		shader->Use();
+
+		for (const auto& light : lights)
+		{
+			if (!light->LightSource->SetUniforms(shader))
+				return FAILURE;
+		}
+
+		if (!models[i]->Draw(viewMatrix, projectionMatrix, cameras[activeCameraId]->Position))
 			return FAILURE;
 	}
 
-	for (int i = 0; i < lightsCount; i++)
-	{
-		if (!lights[i]->Draw(viewMatrix, projectionMatrix, lights[0]->Position, lights[0]->Color, cameras[activeCameraId]->Position))
-			return FAILURE;
-	}
+	//for (int i = 0; i < lightsCount; i++)
+	//{
+	//	if (!lights[i]->Draw(viewMatrix, projectionMatrix, cameras[activeCameraId]->Position))
+	//		return FAILURE;
+	//}
 
 	return SUCCESS;
+}
+
+glm::vec3 Scene::GetAmbient()
+{
+	return ambient;
 }

@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="consts.hpp" />
     <ClInclude Include="includes.hpp" />
+    <ClInclude Include="light.hpp" />
     <ClInclude Include="lightModel.hpp" />
     <ClInclude Include="material.hpp" />
     <ClInclude Include="mesh.hpp" />

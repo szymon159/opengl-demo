@@ -21,6 +21,8 @@ public:
 	void Update();
 	bool Draw();
 
+	glm::vec3 GetAmbient();
+
 private:
 	glm::mat4 projectionMatrix;
 	std::vector<Model*> models;

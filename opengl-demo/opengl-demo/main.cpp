@@ -6,6 +6,7 @@
 #include "lightModel.hpp"
 #include "scene.hpp"
 #include "material.hpp"
+#include "light.hpp"
 
 using namespace window;
 
@@ -37,14 +38,14 @@ int main()
 {
     GLFWwindow* window;
 
-    if (!initializeGLFW() 
+    if (!initializeGLFW()
         || !(window = createWindow())
         || !initializeGLAD())
         return EXIT_FAILURE;
 
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, kWindowWidth, kWindowHeight);
-    
+
     // TODO: Link shaders in compile-time or make it work when started from .exe
     //Shader shader("gouraudVertexShader.vert", "gouraudFragShader.frag");
     Shader shader("phongVertexShader.vert", "phongFragShader.frag");
@@ -57,12 +58,12 @@ int main()
     // Create models and add them to a scene
     Scene scene(projection);
 
-    Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.002f), &shader, modelpth, Material::Gold());
+    Model staticCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.005f), &shader, "models/Z3_Lowpoly_OBJ2.obj", Material::Gold());
     if (!staticCube.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&staticCube);
 
-    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, modelpth, Material::CyanRubber());
+    Model movingCube(glm::vec3(0.0f, 0.0f, 0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.002f), &shader, "models/SM_Pushcart_002.obj", Material::Gold());
     if (!movingCube.IsDefined)
         return EXIT_FAILURE;
     // TODO: Move it
@@ -76,7 +77,7 @@ int main()
     movingCube.SetUpdateFunction(moving_cube_update_func);
     scene.AddModel(&movingCube);
 
-    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Pearl());
+    Model floor(glm::vec3(0.f, -3.f, -0.1f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(50.f, 10.f, 0.0001f), &shader, "models/cube.obj", Material::Gold());
     if (!floor.IsDefined)
         return EXIT_FAILURE;
     scene.AddModel(&floor);
@@ -95,9 +96,11 @@ int main()
     scene.SetAmbient(0.5f, glm::vec3(1.0f));
     Shader lightShader("phongVertexShader.vert", "phongFragShader.frag");
     //Shader lightShader("lightVertexShader.vert", "lightFragmentShader.frag");
-   if (!lightShader.IsDefined)
+    if (!lightShader.IsDefined)
         return EXIT_FAILURE;
-    LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 1.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, glm::vec3(1.f));
+
+    DirectionalLight basicLight(scene.GetAmbient(), glm::vec3(0.8f), glm::vec3(0.5f), glm::vec3(0.5f), glm::vec3(-1.f));
+    LightModel basicLightSource(glm::vec3(0.0f, 0.0f, 25.f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0002f), &lightShader, &basicLight);
     if (!basicLightSource.IsDefined)
         return EXIT_FAILURE;
     scene.AddLight(&basicLightSource);
@@ -120,7 +123,7 @@ int main()
         // Clear the scene
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-       
+
         // Update models
         scene.Update();
 
@@ -133,5 +136,5 @@ int main()
     }
 
     glfwTerminate();
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

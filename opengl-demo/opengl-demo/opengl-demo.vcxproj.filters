@@ -54,6 +54,9 @@
     <ClInclude Include="material.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="light.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
