@@ -1,0 +1,18 @@
+Klawisze:
+
+ESC - zamknięcie programu
+
+Kamery (naciśnięcie klawisza oznacza wybór kamery):
+1 - Nieruchoma
+2 - Nieruchoma śledząca obiekt
+3 - Ruchoma śledząca obiekt
+
+Tryb wyświetlania (naciśnięcie klawisza oznacza wybór trybu):
+Q - wypełnione trójkąty
+E - tylko krawędzie wszystkich trójkątów
+
+Shader (naciśnięcie klawisza przełącza używany shader):
+G - przełączenie używanego shadera (domyślnie Phong)
+
+Lighting (naciśnięcie klawisza oznacza model oświetlenia):
+B - przełączenie modelu światła (domyślnie model Phonga)

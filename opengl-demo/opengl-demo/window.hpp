@@ -7,6 +7,9 @@ namespace window
 {
     // This variable is needed as main loop operations are not capped to monitor refresh rate
     float MaxFPS = 60.0f;
+    Scene* scene;
+
+    void processInput(GLFWwindow* window, int key, int scancode, int action, int mods);
 
     void framebufferSize_callback(GLFWwindow* window, int width, int height)
     {
@@ -35,6 +38,8 @@ namespace window
 
         glfwSetFramebufferSizeCallback(window, framebufferSize_callback);
 
+        glfwSetKeyCallback(window, processInput);
+
         return window;
     }
 
@@ -50,36 +55,51 @@ namespace window
     // Display mode:
     // Q - filled polygons
     // E - wireframe of polygons
-    void processInput(GLFWwindow *window, Scene *scene)
+    //
+    // Shader:
+    // G - toggle using Gouraud shading (default Phong)
+    //
+    // Lighting:
+    // B - toggle using Blinn lightin (default Blinn)
+    void processInput(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         // Cameras
-        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+        if (key == GLFW_KEY_1 && action == GLFW_PRESS)
         {
             scene->ToggleActiveCamera(0);
-
         }
-        else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
         {
             scene->ToggleActiveCamera(1);
         }
-        else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+        else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
         {
             scene->ToggleActiveCamera(2);
         }
         // Display mode
-        else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         }
-        else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        else if (key == GLFW_KEY_E && action == GLFW_PRESS)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         }
         // Close
-        else if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         {
             glfwSetWindowShouldClose(window, true);
+        }
+        // Toggle gouraud shading
+        else if (key == GLFW_KEY_G && action == GLFW_PRESS)
+        {
+            scene->ToggleGouraudShading();
+        }
+        // Toggle Blinn lighting model
+        else if (key == GLFW_KEY_B && action == GLFW_PRESS)
+        {
+            scene->ToggleBlinnLighting();
         }
     }
 }

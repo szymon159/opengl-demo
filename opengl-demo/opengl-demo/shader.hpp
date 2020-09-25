@@ -2,6 +2,8 @@
 
 #include "includes.hpp"
 
+#include "material.hpp"
+
 #ifndef SHADER_H
 #define SHADER_H
 
@@ -23,6 +25,8 @@ public:
     bool SetInt(const std::string& name, int value) const;
     bool SetFloat(const std::string& name, float value) const;
     bool SetMatrix4(const std::string& name, glm::mat4 value) const;
+    bool SetVec3(const std::string& name, glm::vec3 value) const;
+    bool SetMaterial(const std::string& name, Material material) const;
 
 private:
     // Code of vertex and fragment shaders
