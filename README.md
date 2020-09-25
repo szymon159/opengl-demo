@@ -1,13 +1,13 @@
 # OpenGL Demo
 ![Interface](opengl-demo/docs/sample.png)
 
-A program using OpenGL to present basic 3D graphics concepts. Created for Computer Graphics classes at the Warsaw University of Technology, based on learnopengl.com tutorial.
+A program using OpenGL to present basic 3D graphics concepts. Created for Computer Graphics classes at the Warsaw University of Technology, based on _learnopengl.com_ tutorial.
 
 
 ## Technology
 Application written in C++, utilizing _OpenGL_ and _Assimp_ libraries. 
 
-Additional dependencies libraries used are: _glfw_ and _zlib_.
+Additional dependencies libraries are: _glfw_ and _zlib_.
 
 ## About
 Application presents some basic 3D graphics effects with lighting and shading effects implemented with OpenGL library.
@@ -46,4 +46,4 @@ Some of the features are not yet finished and therefore the effects might not be
 * __G__ - toggle using Gouraud shading (default Phong)
     
 #### Lighting:
-* __B__ - toggle using Blinn lightin (default Blinn)
+* __B__ - toggle using Blinn lighting (default Blinn)
